@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="917" height="274" viewBox="0 0 917 274">
+<defs><linearGradient id="ban" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b0e05"/><stop offset="1" stop-color="#0d0702"/></linearGradient></defs>
+<rect width="917" height="274" fill="#0c0c0c"/>
+<rect x="1" y="1" width="915" height="272" rx="4" fill="url(#ban)" stroke="#3c3c3c" stroke-width="1.5"/>
+<rect x="38" y="30" width="841" height="212" rx="10" fill="none" stroke="#4a2b12" stroke-width="2"/>
+<text x="458" y="150" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-style="italic" font-weight="700" font-size="92" fill="#f4f3ef">Berlin Good</text>
+<text x="458" y="188" text-anchor="middle" font-family="DejaVu Sans Mono,monospace" font-weight="700" font-size="14" letter-spacing="5" fill="#e0782a">MINIMOOG VOICE · PHASER · DELAY · SHIMMER</text>
+<text x="458" y="214" text-anchor="middle" font-family="DejaVu Sans Mono,monospace" font-size="10.5" letter-spacing="2.2" fill="#85827a">SYNTH ENGINE RAFFOSYNTH · N. ROULET &amp; J. PALLADINO · MIT</text>
+</svg>
