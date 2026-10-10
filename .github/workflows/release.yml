@@ -1,0 +1,30 @@
+name: Release (draft)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version, e.g. 1.0.0
+        required: true
+      dry_run:
+        description: Build only (no draft release)
+        type: boolean
+        default: false
+
+jobs:
+  vst:
+    uses: saustin2010/mpc-vst-plugins/.github/workflows/vst-release.yml@f210a56b269deb622ce4d62f437ee3ac8567ceaf
+    permissions:
+      contents: write
+    with:
+      tag: v${{ inputs.version }}
+      version: ${{ inputs.version }}
+      tools_repo: saustin2010/mpc-vst-plugins
+      tools_ref: f210a56b269deb622ce4d62f437ee3ac8567ceaf
+      vst_dir: .
+      build: bash "$MPC_VST/tools/build_port.sh" vst.json
+      host_test: '"$MPC_VST/tools/test_port.sh" vst.json'
+      plugin_id: berlingood
+      license: MIT
+      about: "Berlin Good: Minimoog-style mono synth with Berlin School phaser, dotted stereo delay and shimmer reverb."
+      dry_run: ${{ inputs.dry_run }}
