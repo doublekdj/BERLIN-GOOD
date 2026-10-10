@@ -1,0 +1,32 @@
+{
+ "name": "[SYN] Berlin Good",
+ "vendor": "KK",
+ "uid": "BrlG",
+ "so": "berlingood.so",
+ "module": "src/module.json",
+ "params": "params.json",
+ "build": {
+  "sources": [
+   "src/dsp/moog_plugin.cpp",
+   "src/dsp/moog_engine.c"
+  ],
+  "cflags": [
+   "-Isrc/dsp",
+   "-std=gnu++14"
+  ],
+  "libs": [
+   "-lm"
+  ]
+ },
+ "layout": "layout.conf",
+ "programs": {
+  "param": "preset",
+  "name": "preset_name"
+ },
+ "art": "html",
+ "defines": {
+  "QLINK_TRAVEL": 1,
+  "SET_IF_CHANGED": 1,
+  "HAS_LFO_BPM": 1
+ }
+}
