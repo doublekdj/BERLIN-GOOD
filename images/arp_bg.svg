@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="628" viewBox="0 0 1280 628">
+<defs>
+ <linearGradient id="bgg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1a0f"/><stop offset="1" stop-color="#1c1109"/></linearGradient>
+ <linearGradient id="ban" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b0e05"/><stop offset="1" stop-color="#0d0702"/></linearGradient>
+</defs>
+<rect x="0" y="0" width="1280" height="628" fill="url(#bgg)"/>
+<rect x="19" y="36" width="1246" height="590" rx="4" fill="none" stroke="#3a2a1d" stroke-width="2"/>
+<text x="640" y="25" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-weight="700" font-size="11" letter-spacing="4" fill="#e0782a">BERLIN MOOD · DEVELOPED BY ANGELO RAGGI (KK)</text><text x="640" y="619" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8.5" letter-spacing="1.5" fill="#85827a">ENGINE: RAFFOSYNTH BY N. ROULET &amp; J. PALLADINO (MIT) · MPC PORT: C. VESTAL, S. AUSTIN</text>
+<rect x="38" y="52" width="360" height="448" rx="6" fill="#131313" stroke="#3c3c3c" stroke-width="1.5"/>
+<text x="52" y="73" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="12" font-weight="700" letter-spacing="2.2" fill="#e0782a">ARPEGGIATOR</text>
+<text x="218" y="98" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="11" letter-spacing="1.6" fill="#85827a">FIXED SEQUENCES · 4 DIRECTIONS</text>
+<text x="118" y="244" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="11" font-weight="700" letter-spacing="2" fill="#e0782a">DIRECTION</text>
+<text x="318" y="368" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="11" font-weight="700" letter-spacing="2" fill="#e0782a">OCTAVES</text>
+<rect x="418" y="52" width="580" height="448" rx="6" fill="#131313" stroke="#3c3c3c" stroke-width="1.5"/>
+<text x="432" y="73" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="12" font-weight="700" letter-spacing="2.2" fill="#e0782a">PATTERN // BERLIN SEQUENCES</text>
+<text x="708" y="98" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="11" letter-spacing="1.6" fill="#85827a">CHORD = YOUR NOTES · OTHERS RUN FROM THE LOWEST KEY</text>
+<rect x="1018" y="52" width="230" height="448" rx="6" fill="#131313" stroke="#3c3c3c" stroke-width="1.5"/>
+<text x="1032" y="73" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="12" font-weight="700" letter-spacing="2.2" fill="#e0782a">TIMING</text>
+<text x="1133" y="98" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="11" letter-spacing="1.6" fill="#85827a">TEMPO: HOST OR FX MOD</text>
+<text x="1133" y="120" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="11" font-weight="700" letter-spacing="2" fill="#e0782a">RATE</text>
+<rect x="38" y="516" width="1210" height="84" rx="6" fill="url(#ban)" stroke="#3c3c3c" stroke-width="1.5"/>
+<text x="643" y="568" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-style="italic" font-weight="700" font-size="46" fill="#f4f3ef">Berlin Mood</text>
+<text x="643" y="590" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="10" letter-spacing="3" fill="#85827a">DEVELOPED BY ANGELO RAGGI (KK)</text>
+</svg>

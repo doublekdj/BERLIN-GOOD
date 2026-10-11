@@ -3,7 +3,7 @@
 <rect width="917" height="274" fill="#0c0c0c"/>
 <rect x="1" y="1" width="915" height="272" rx="4" fill="url(#ban)" stroke="#3c3c3c" stroke-width="1.5"/>
 <rect x="38" y="30" width="841" height="212" rx="10" fill="none" stroke="#4a2b12" stroke-width="2"/>
-<text x="458" y="150" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-style="italic" font-weight="700" font-size="92" fill="#f4f3ef">Berlin Good</text>
-<text x="458" y="188" text-anchor="middle" font-family="DejaVu Sans Mono,monospace" font-weight="700" font-size="14" letter-spacing="5" fill="#e0782a">MINIMOOG VOICE · PHASER · DELAY · SHIMMER</text>
-<text x="458" y="214" text-anchor="middle" font-family="DejaVu Sans Mono,monospace" font-size="10.5" letter-spacing="2.2" fill="#85827a">SYNTH ENGINE RAFFOSYNTH · N. ROULET &amp; J. PALLADINO · MIT</text>
+<text x="458" y="150" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-style="italic" font-weight="700" font-size="92" fill="#f4f3ef">Berlin Mood</text>
+<text x="458" y="188" text-anchor="middle" font-family="DejaVu Sans Mono,monospace" font-weight="700" font-size="14" letter-spacing="5" fill="#e0782a">MONO LADDER SYNTH · PHASER · DELAY · SHIMMER</text>
+<text x="458" y="214" text-anchor="middle" font-family="DejaVu Sans Mono,monospace" font-size="13" font-weight="700" letter-spacing="3" fill="#85827a">DEVELOPED BY ANGELO RAGGI (KK)</text>
 </svg>
