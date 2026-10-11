@@ -11,3 +11,4 @@
 .arrow { fill: var(--accent-hi); }
 .dot-arrow { fill: var(--accent-hi); }
 .frame-border { stroke-width: 2; }
+.arrow, .dot-arrow { fill: #ff9440; }

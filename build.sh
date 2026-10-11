@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build Berlin Good for the MPC (needs git, Docker running). Run from this folder.
+# Build Berlin Mood for the MPC (needs git, Docker running). Run from this folder.
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 FW="$HERE/framework"

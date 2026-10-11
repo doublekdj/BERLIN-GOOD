@@ -61,8 +61,9 @@ typedef plugin_api_v2_t* (*move_plugin_init_v2_fn)(const host_api_v1_t *host);
 /* Include param helper */
 #include "param_helper.h"
 
-/* Berlin Good effects: phaser, dotted ping-pong delay, shimmer reverb */
+/* Berlin Mood effects: phaser, dotted ping-pong delay, shimmer reverb */
 #include "fx.h"
+#include "arp.h"
 
 /* Host API reference */
 static const host_api_v1_t *g_host = NULL;
@@ -119,10 +120,18 @@ enum {
     P_MOD_PITCH,
     P_BEND_RANGE,
     P_VEL_SENS,
-    /* Berlin Good FX (appended: indices of the synth params above never move) */
+    /* Berlin Mood FX (appended: indices of the synth params above never move) */
     P_PH_RATE, P_PH_DEPTH, P_PH_FB, P_PH_MIX,
     P_DL_DIV, P_DL_FB, P_DL_MIX, P_DL_TONE, P_DL_SYNC, P_DL_BPM,
     P_SH_DECAY, P_SH_SHIMMER, P_SH_MIX, P_SH_DAMP,
+    /* v1.1: drive, effect on/off, reverb type, compressor, limiter, arpeggiator (appended) */
+    P_DR_ON, P_DR_TYPE, P_DR_DRIVE, P_DR_TONE, P_DR_MIX,
+    P_PH_ON, P_DL_ON, P_RV_ON, P_RV_TYPE,
+    P_CP_ON, P_CP_THRESH, P_CP_RATIO, P_CP_ATTACK, P_CP_RELEASE, P_CP_MAKEUP,
+    P_LM_ON, P_LM_CEIL, P_LM_RELEASE,
+    P_ARP_ON, P_ARP_HOLD, P_ARP_DIR, P_ARP_PAT, P_ARP_RATE, P_ARP_OCT, P_ARP_GATE,
+    /* macros: added on top of the patch values, always start at 0 */
+    P_MAC1, P_MAC2, P_MAC3, P_MAC4,
     P_COUNT
 };
 
@@ -203,13 +212,47 @@ static const param_def_t g_shadow_params[] = {
     {"sh_shimmer",    "Shimmer Amt",   PARAM_TYPE_FLOAT, P_SH_SHIMMER,    0.0f, 1.0f},
     {"sh_mix",        "Shimmer Mix",   PARAM_TYPE_FLOAT, P_SH_MIX,        0.0f, 1.0f},
     {"sh_damp",       "Shimmer Damp",  PARAM_TYPE_FLOAT, P_SH_DAMP,       0.0f, 1.0f},
+    /* Drive */
+    {"dr_on",         "Drive On",      PARAM_TYPE_INT,   P_DR_ON,         0.0f, 1.0f},
+    {"dr_type",       "Drive Type",    PARAM_TYPE_INT,   P_DR_TYPE,       0.0f, 2.0f},
+    {"dr_drive",      "Drive Amount",  PARAM_TYPE_FLOAT, P_DR_DRIVE,      0.0f, 1.0f},
+    {"dr_tone",       "Drive Tone",    PARAM_TYPE_FLOAT, P_DR_TONE,       0.0f, 1.0f},
+    {"dr_mix",        "Drive Mix",     PARAM_TYPE_FLOAT, P_DR_MIX,        0.0f, 1.0f},
+    /* On/off + reverb type */
+    {"ph_on",         "Phaser On",     PARAM_TYPE_INT,   P_PH_ON,         0.0f, 1.0f},
+    {"dl_on",         "Delay On",      PARAM_TYPE_INT,   P_DL_ON,         0.0f, 1.0f},
+    {"rv_on",         "Reverb On",     PARAM_TYPE_INT,   P_RV_ON,         0.0f, 1.0f},
+    {"rv_type",       "Reverb Type",   PARAM_TYPE_INT,   P_RV_TYPE,       0.0f, 2.0f},
+    /* Compressor / limiter */
+    {"cp_on",         "Comp On",       PARAM_TYPE_INT,   P_CP_ON,         0.0f, 1.0f},
+    {"cp_thresh",     "Comp Thresh",   PARAM_TYPE_FLOAT, P_CP_THRESH,     0.0f, 1.0f},
+    {"cp_ratio",      "Comp Ratio",    PARAM_TYPE_FLOAT, P_CP_RATIO,      0.0f, 1.0f},
+    {"cp_attack",     "Comp Attack",   PARAM_TYPE_FLOAT, P_CP_ATTACK,     0.0f, 1.0f},
+    {"cp_release",    "Comp Release",  PARAM_TYPE_FLOAT, P_CP_RELEASE,    0.0f, 1.0f},
+    {"cp_makeup",     "Comp Makeup",   PARAM_TYPE_FLOAT, P_CP_MAKEUP,     0.0f, 1.0f},
+    {"lm_on",         "Limiter On",    PARAM_TYPE_INT,   P_LM_ON,         0.0f, 1.0f},
+    {"lm_ceil",       "Limiter Ceil",  PARAM_TYPE_FLOAT, P_LM_CEIL,       0.0f, 1.0f},
+    {"lm_release",    "Limiter Rel",   PARAM_TYPE_FLOAT, P_LM_RELEASE,    0.0f, 1.0f},
+    /* Arpeggiator */
+    {"arp_on",        "Arp On",        PARAM_TYPE_INT,   P_ARP_ON,        0.0f, 1.0f},
+    {"arp_hold",      "Arp Hold",      PARAM_TYPE_INT,   P_ARP_HOLD,      0.0f, 1.0f},
+    {"arp_dir",       "Arp Direction", PARAM_TYPE_INT,   P_ARP_DIR,       0.0f, 3.0f},
+    {"arp_pat",       "Arp Pattern",   PARAM_TYPE_INT,   P_ARP_PAT,       0.0f, 15.0f},
+    {"arp_rate",      "Arp Rate",      PARAM_TYPE_INT,   P_ARP_RATE,      0.0f, 5.0f},
+    {"arp_oct",       "Arp Octaves",   PARAM_TYPE_INT,   P_ARP_OCT,       0.0f, 2.0f},
+    {"arp_gate",      "Arp Gate",      PARAM_TYPE_FLOAT, P_ARP_GATE,      0.0f, 1.0f},
+    /* Macros */
+    {"macro1",        "Macro OPEN",    PARAM_TYPE_FLOAT, P_MAC1,          0.0f, 1.0f},
+    {"macro2",        "Macro SPACE",   PARAM_TYPE_FLOAT, P_MAC2,          0.0f, 1.0f},
+    {"macro3",        "Macro ECHO",    PARAM_TYPE_FLOAT, P_MAC3,          0.0f, 1.0f},
+    {"macro4",        "Macro PHASE",   PARAM_TYPE_FLOAT, P_MAC4,          0.0f, 1.0f},
 };
 
 /* =====================================================================
  * Preset system
  * ===================================================================== */
 
-#define MAX_PRESETS 32
+#define MAX_PRESETS 300
 
 struct MoogPreset {
     char name[32];
@@ -431,58 +474,15 @@ static const MoogPreset g_factory_presets[] = {
         0.3f, 0.0f, 0.0f,  /* lfo: rate, pitch, filter */
         0.5f, 0.5f, 0.167f, 0.2f  /* mod_filt, mod_pitch, bend, vel_sens */
     }},
-    /* ---- Berlin Good patches (synth + FX). FX order: ph rate,depth,fb,mix | dl div,fb,mix,tone,sync,bpm | sh decay,shimmer,mix,damp ---- */
-    /* 14: Phaedra Sequence - detuned saws, slow phaser, dotted 1/8 */
-    {"Phaedra Seq", {
-        1, 0.8f, -1,  1, 0.7f, -1, 0.46f,  1, 0.5f, -2, 0.54f,  0, 0.0f, 0, 0.5f,
-        0.0f,
-        0.42f, 0.35f, 0.45f, 0.3f,
-        0.0f, 0.22f, 0.0f, 0.12f,
-        0.0f, 0.2f, 0.25f, 0.15f,
-        0.0f, 0.6f,
-        0.3f, 0.0f, 0.0f,
-        0.5f, 0.5f, 0.167f, 0.5f,
-        0.18f, 0.7f, 0.55f, 0.75f,  0, 0.45f, 0.4f, 0.55f, 0, 0.5f,  0.55f, 0.15f, 0.18f, 0.5f
-    }},
-    /* 15: Rubycon Pad - slow strings-like pad, big shimmer */
-    {"Rubycon Pad", {
-        1, 0.75f, 0,  1, 0.7f, 0, 0.44f,  1, 0.6f, -1, 0.56f,  2, 0.2f, 1, 0.5f,
-        0.0f,
-        0.5f, 0.25f, 0.2f, 0.2f,
-        0.55f, 0.5f, 0.85f, 0.7f,
-        0.4f, 0.5f, 0.4f, 0.6f,
-        0.0f, 0.55f,
-        0.25f, 0.05f, 0.0f,
-        0.5f, 0.5f, 0.167f, 0.5f,
-        0.12f, 0.8f, 0.7f, 0.9f,  1, 0.3f, 0.35f, 0.5f, 0, 0.5f,  0.78f, 0.55f, 0.5f, 0.45f
-    }},
-    /* 16: Stratosfear Lead - singing mono lead, dotted echoes */
-    {"Stratosfear Lead", {
-        1, 0.8f, 0,  1, 0.6f, 0, 0.51f,  2, 0.25f, -1, 0.5f,  0, 0.0f, 0, 0.5f,
-        0.0f,
-        0.58f, 0.4f, 0.55f, 0.4f,
-        0.02f, 0.3f, 0.8f, 0.25f,
-        0.02f, 0.3f, 0.4f, 0.25f,
-        0.12f, 0.55f,
-        0.35f, 0.08f, 0.0f,
-        0.5f, 0.5f, 0.167f, 0.6f,
-        0.35f, 0.5f, 0.3f, 0.4f,  0, 0.5f, 0.45f, 0.65f, 0, 0.5f,  0.6f, 0.3f, 0.28f, 0.4f
-    }},
-    /* 17: Tangram Bass - round sequencer bass */
-    {"Tangram Bass", {
-        1, 0.9f, -2,  1, 0.5f, -1, 0.52f,  0, 0.3f, -2, 0.5f,  0, 0.0f, 0, 0.5f,
-        0.0f,
-        0.3f, 0.45f, 0.6f, 0.2f,
-        0.0f, 0.25f, 0.5f, 0.15f,
-        0.0f, 0.3f, 0.2f, 0.15f,
-        0.0f, 0.7f,
-        0.3f, 0.0f, 0.0f,
-        0.5f, 0.5f, 0.167f, 0.5f,
-        0.12f, 0.5f, 0.35f, 0.25f,  0, 0.3f, 0.22f, 0.4f, 0, 0.5f,  0.4f, 0.0f, 0.1f, 0.6f
-    }},
 };
 
+#define FACTORY_PRESET_COUNT_CONST 14
 #define FACTORY_PRESET_COUNT (int)(sizeof(g_factory_presets) / sizeof(g_factory_presets[0]))
+
+/* 4 + 256 Berlin Mood patches, generated by tools/gen_presets.py (all 76 patch values, enum order) */
+#include "presets_berlin.h"
+static_assert(BERLIN_PRESET_VALUES == P_MAC1, "presets_berlin.h does not match the parameter enum - run tools/gen_presets.py");
+static_assert(FACTORY_PRESET_COUNT_CONST + BERLIN_PRESET_COUNT <= MAX_PRESETS, "too many presets");
 
 /* =====================================================================
  * Instance
@@ -499,15 +499,26 @@ typedef struct {
     float output_gain;
     int octave_transpose;
     fx_t fx;
+    arp_t arp;
 } moog_instance_t;
 
 /* Forward declarations */
 static void apply_params_to_engine(moog_instance_t *inst);
 static void apply_preset(moog_instance_t *inst, int preset_idx);
+static void arp_stop_all(moog_instance_t *inst);
 
 /* =====================================================================
  * Parameter application
  * ===================================================================== */
+
+static inline float mac_up(float base, float m) { return base + m * (1.0f - base); }
+
+/* silence the arpeggiator and the engine, forget held notes */
+static void arp_stop_all(moog_instance_t *inst) {
+    int note;
+    arp_reset(&inst->arp, &note);
+    moog_engine_all_notes_off(&inst->engine);
+}
 
 static void apply_params_to_engine(moog_instance_t *inst) {
     moog_engine_t *e = &inst->engine;
@@ -533,7 +544,8 @@ static void apply_params_to_engine(moog_instance_t *inst) {
 
     e->noise_volume      = inst->params[P_NOISE];
 
-    e->filter_cutoff     = inst->params[P_FILTER_CUTOFF];
+    const float m1 = inst->params[P_MAC1], m2 = inst->params[P_MAC2], m3 = inst->params[P_MAC3], m4 = inst->params[P_MAC4];
+    e->filter_cutoff     = mac_up(inst->params[P_FILTER_CUTOFF], m1);
     e->filter_resonance  = inst->params[P_FILTER_RESONANCE];
     e->filter_contour    = inst->params[P_FILTER_CONTOUR];
     e->filter_key_follow = inst->params[P_FILTER_KEY_FOLLOW];
@@ -560,16 +572,48 @@ static void apply_params_to_engine(moog_instance_t *inst) {
     e->bend_range        = inst->params[P_BEND_RANGE];
     e->velocity_sensitivity = inst->params[P_VEL_SENS];
 
+    const float *P = inst->params;
     fx_params_t *f = &inst->fx.p;
-    f->ph_rate = inst->params[P_PH_RATE];   f->ph_depth = inst->params[P_PH_DEPTH];
-    f->ph_fb = inst->params[P_PH_FB];       f->ph_mix = inst->params[P_PH_MIX];
-    f->dl_div = (int)(inst->params[P_DL_DIV] + 0.5f);
-    f->dl_fb = inst->params[P_DL_FB];       f->dl_mix = inst->params[P_DL_MIX];
-    f->dl_tone = inst->params[P_DL_TONE];
-    f->dl_sync = (int)(inst->params[P_DL_SYNC] + 0.5f);
-    f->dl_bpm = inst->params[P_DL_BPM];
-    f->sh_decay = inst->params[P_SH_DECAY]; f->sh_shimmer = inst->params[P_SH_SHIMMER];
-    f->sh_mix = inst->params[P_SH_MIX];     f->sh_damp = inst->params[P_SH_DAMP];
+    f->ph_rate = P[P_PH_RATE];
+    f->ph_depth = mac_up(P[P_PH_DEPTH], m4 * 0.6f);
+    f->ph_fb = mac_up(P[P_PH_FB], m4 * 0.4f);
+    f->ph_mix = mac_up(P[P_PH_MIX], m4 * 0.7f);
+    f->ph_on = P[P_PH_ON] > 0.5f || m4 > 0.01f;
+    f->dl_div = (int)(P[P_DL_DIV] + 0.5f);
+    f->dl_fb = fminf(0.85f, mac_up(P[P_DL_FB], m3 * 0.4f));
+    f->dl_mix = mac_up(P[P_DL_MIX], m3 * 0.6f);
+    f->dl_tone = P[P_DL_TONE];
+    f->dl_sync = (int)(P[P_DL_SYNC] + 0.5f);
+    f->dl_bpm = P[P_DL_BPM];
+    f->dl_on = P[P_DL_ON] > 0.5f || m3 > 0.01f;
+    f->rv_type = (int)(P[P_RV_TYPE] + 0.5f);
+    f->sh_decay = mac_up(P[P_SH_DECAY], m2 * 0.5f);
+    f->sh_shimmer = mac_up(P[P_SH_SHIMMER], m2 * 0.4f);
+    f->sh_mix = mac_up(P[P_SH_MIX], m2 * 0.7f);
+    f->sh_damp = P[P_SH_DAMP];
+    f->rv_on = P[P_RV_ON] > 0.5f || m2 > 0.01f;
+    f->dr_on = P[P_DR_ON] > 0.5f;
+    f->dr_type = (int)(P[P_DR_TYPE] + 0.5f);
+    f->dr_drive = P[P_DR_DRIVE]; f->dr_tone = P[P_DR_TONE]; f->dr_mix = P[P_DR_MIX];
+    f->cp_on = P[P_CP_ON] > 0.5f;
+    f->cp_thresh = P[P_CP_THRESH]; f->cp_ratio = P[P_CP_RATIO]; f->cp_attack = P[P_CP_ATTACK];
+    f->cp_release = P[P_CP_RELEASE]; f->cp_makeup = P[P_CP_MAKEUP];
+    f->lm_on = P[P_LM_ON] > 0.5f;
+    f->lm_ceil = P[P_LM_CEIL]; f->lm_release = P[P_LM_RELEASE];
+
+    /* arpeggiator */
+    arp_t *a = &inst->arp;
+    int want_on = P[P_ARP_ON] > 0.5f;
+    if (want_on != a->on) arp_stop_all(inst);   /* switching on or off: silence whatever is sounding */
+    a->on = want_on;
+    a->dir = (int)(P[P_ARP_DIR] + 0.5f);
+    a->pat = (int)(P[P_ARP_PAT] + 0.5f);
+    a->rate = (int)(P[P_ARP_RATE] + 0.5f);
+    a->oct = (int)(P[P_ARP_OCT] + 0.5f);
+    a->gate = P[P_ARP_GATE];
+    int hold = P[P_ARP_HOLD] > 0.5f;
+    if (a->hold && !hold && a->keys_down == 0) a->nheld = 0;   /* unlatch */
+    a->hold = hold;
 }
 
 static void apply_preset(moog_instance_t *inst, int preset_idx) {
@@ -615,10 +659,28 @@ static void* v2_create_instance(const char *module_dir, const char *json_default
     moog_engine_init(&inst->engine);
     fx_init(&inst->fx);
 
-    /* Load factory presets */
-    inst->preset_count = FACTORY_PRESET_COUNT;
+    arp_init(&inst->arp);
+
+    /* Load factory presets: the 14 RaffoSynth patches (dry, limiter on), then the Berlin Mood bank */
+    inst->preset_count = 0;
     for (int i = 0; i < FACTORY_PRESET_COUNT; i++) {
-        memcpy(&inst->presets[i], &g_factory_presets[i], sizeof(MoogPreset));
+        MoogPreset *p = &inst->presets[inst->preset_count++];
+        memset(p, 0, sizeof(*p));
+        memcpy(p, &g_factory_presets[i], sizeof(MoogPreset));
+        p->params[P_PH_RATE] = 0.25f; p->params[P_PH_DEPTH] = 0.6f; p->params[P_PH_FB] = 0.4f;
+        p->params[P_DL_FB] = 0.4f; p->params[P_DL_TONE] = 0.6f; p->params[P_DL_BPM] = 0.5f;
+        p->params[P_SH_DECAY] = 0.5f; p->params[P_SH_DAMP] = 0.5f; p->params[P_RV_TYPE] = 2;
+        p->params[P_DR_DRIVE] = 0.3f; p->params[P_DR_TONE] = 0.6f; p->params[P_DR_MIX] = 0.5f;
+        p->params[P_CP_THRESH] = 0.5f; p->params[P_CP_RATIO] = 0.4f; p->params[P_CP_ATTACK] = 0.3f;
+        p->params[P_CP_RELEASE] = 0.4f; p->params[P_CP_MAKEUP] = 0.2f;
+        p->params[P_LM_ON] = 1; p->params[P_LM_CEIL] = 0.85f; p->params[P_LM_RELEASE] = 0.4f;
+        p->params[P_ARP_GATE] = 0.5f; p->params[P_ARP_RATE] = 3;
+    }
+    for (int i = 0; i < BERLIN_PRESET_COUNT; i++) {
+        MoogPreset *p = &inst->presets[inst->preset_count++];
+        memset(p, 0, sizeof(*p));
+        snprintf(p->name, sizeof(p->name), "%s", g_berlin_presets[i].name);
+        for (int k = 0; k < BERLIN_PRESET_VALUES; k++) p->params[k] = g_berlin_presets[i].v[k];
     }
 
     /* Apply first preset */
@@ -647,13 +709,16 @@ static void v2_on_midi(void *instance, const uint8_t *msg, int len, int source) 
     switch (status) {
         case 0x90:
             if (data2 > 0) {
-                moog_engine_note_on(&inst->engine, data1, data2 / 127.0f);
+                if (inst->arp.on) arp_note_on(&inst->arp, data1, data2);
+                else moog_engine_note_on(&inst->engine, data1, data2 / 127.0f);
             } else {
-                moog_engine_note_off(&inst->engine, data1);
+                if (inst->arp.on) arp_note_off(&inst->arp, data1);
+                else moog_engine_note_off(&inst->engine, data1);
             }
             break;
         case 0x80:
-            moog_engine_note_off(&inst->engine, data1);
+            if (inst->arp.on) arp_note_off(&inst->arp, data1);
+            else moog_engine_note_off(&inst->engine, data1);
             break;
         case 0xB0:
             switch (data1) {
@@ -663,7 +728,7 @@ static void v2_on_midi(void *instance, const uint8_t *msg, int len, int source) 
                 case 64: /* Sustain */
                     break;
                 case 123: /* All notes off */
-                    moog_engine_all_notes_off(&inst->engine);
+                    arp_stop_all(inst);
                     break;
             }
             break;
@@ -726,7 +791,7 @@ static void v2_set_param(void *instance, const char *key, const char *val) {
         fx_set_host_bpm(&inst->fx, (float)atof(val));   /* host tempo -> dotted delay */
     }
     else if (strcmp(key, "all_notes_off") == 0) {
-        moog_engine_all_notes_off(&inst->engine);
+        arp_stop_all(inst);
     }
     else {
         /* Named parameter access */
@@ -757,7 +822,7 @@ static int v2_get_param(void *instance, const char *key, char *buf, int buf_len)
         return snprintf(buf, buf_len, "%s", inst->preset_name);
     }
     if (strcmp(key, "name") == 0) {
-        return snprintf(buf, buf_len, "Berlin Good");
+        return snprintf(buf, buf_len, "Berlin Mood");
     }
     if (strcmp(key, "octave_transpose") == 0) {
         return snprintf(buf, buf_len, "%d", inst->octave_transpose);
@@ -795,6 +860,11 @@ static int v2_get_param(void *instance, const char *key, char *buf, int buf_len)
                         "{\"level\":\"amp_env\",\"label\":\"Amp Env\"},"
                         "{\"level\":\"lfo\",\"label\":\"LFO\"},"
                         "{\"level\":\"performance\",\"label\":\"Performance\"},"
+                        "{\"level\":\"macros\",\"label\":\"Macros\"},"
+                        "{\"level\":\"fx_drive\",\"label\":\"Drive\"},"
+                        "{\"level\":\"fx_comp\",\"label\":\"Compressor\"},"
+                        "{\"level\":\"fx_limit\",\"label\":\"Limiter\"},"
+                        "{\"level\":\"arp\",\"label\":\"Arpeggiator\"},"
                         "{\"level\":\"fx_phaser\",\"label\":\"Phaser\"},"
                         "{\"level\":\"fx_delay\",\"label\":\"Dotted Delay\"},"
                         "{\"level\":\"fx_shimmer\",\"label\":\"Shimmer Reverb\"}"
@@ -845,9 +915,34 @@ static int v2_get_param(void *instance, const char *key, char *buf, int buf_len)
                     "\"knobs\":[\"lfo_rate\",\"lfo_pitch\",\"lfo_filter\"],"
                     "\"params\":[\"lfo_rate\",\"lfo_pitch\",\"lfo_filter\"]"
                 "},"
+                "\"macros\":{"
+                    "\"children\":null,"
+                    "\"knobs\":[\"macro1\",\"macro2\",\"macro3\",\"macro4\"],"
+                    "\"params\":[\"macro1\",\"macro2\",\"macro3\",\"macro4\"]"
+                "},"
+                "\"fx_drive\":{"
+                    "\"children\":null,"
+                    "\"knobs\":[\"dr_on\",\"dr_type\",\"dr_drive\",\"dr_tone\",\"dr_mix\"],"
+                    "\"params\":[\"dr_on\",\"dr_type\",\"dr_drive\",\"dr_tone\",\"dr_mix\"]"
+                "},"
+                "\"fx_comp\":{"
+                    "\"children\":null,"
+                    "\"knobs\":[\"cp_on\",\"cp_thresh\",\"cp_ratio\",\"cp_attack\",\"cp_release\",\"cp_makeup\"],"
+                    "\"params\":[\"cp_on\",\"cp_thresh\",\"cp_ratio\",\"cp_attack\",\"cp_release\",\"cp_makeup\"]"
+                "},"
+                "\"fx_limit\":{"
+                    "\"children\":null,"
+                    "\"knobs\":[\"lm_on\",\"lm_ceil\",\"lm_release\"],"
+                    "\"params\":[\"lm_on\",\"lm_ceil\",\"lm_release\"]"
+                "},"
+                "\"arp\":{"
+                    "\"children\":null,"
+                    "\"knobs\":[\"arp_on\",\"arp_hold\",\"arp_dir\",\"arp_pat\",\"arp_rate\",\"arp_oct\",\"arp_gate\"],"
+                    "\"params\":[\"arp_on\",\"arp_hold\",\"arp_dir\",\"arp_pat\",\"arp_rate\",\"arp_oct\",\"arp_gate\"]"
+                "},"
                 "\"fx_phaser\":{"
                     "\"children\":null,"
-                    "\"knobs\":[\"ph_rate\",\"ph_depth\",\"ph_fb\",\"ph_mix\"],"
+                    "\"knobs\":[\"ph_on\",\"ph_rate\",\"ph_depth\",\"ph_fb\",\"ph_mix\"],"
                     "\"params\":[\"ph_rate\",\"ph_depth\",\"ph_fb\",\"ph_mix\"]"
                 "},"
                 "\"fx_delay\":{"
@@ -922,19 +1017,31 @@ static void v2_render_block(void *instance, int16_t *out_interleaved_lr, int fra
         return;
     }
 
-    /* Render mono synth, then the stereo FX chain */
+    /* Render the mono synth (split at arpeggiator events), then the stereo FX chain */
     float mono_buf[256], fl[256], fr[256];
     if (frames > 256) frames = 256;
 
-    moog_engine_render(&inst->engine, mono_buf, frames);
+    arp_event_t ev[64];
+    int ne = 0;
+    if (inst->arp.on) ne = arp_process(&inst->arp, frames, fx_get_bpm(&inst->fx), ev, 64);
+    int pos = 0;
+    for (int k = 0; k < ne; k++) {
+        int at = ev[k].at < pos ? pos : (ev[k].at > frames ? frames : ev[k].at);
+        if (at > pos) { moog_engine_render(&inst->engine, mono_buf + pos, at - pos); pos = at; }
+        if (ev[k].on) moog_engine_note_on(&inst->engine, ev[k].note, ev[k].vel / 127.0f);
+        else moog_engine_note_off(&inst->engine, ev[k].note);
+    }
+    if (pos < frames) moog_engine_render(&inst->engine, mono_buf + pos, frames - pos);
+
+    /* output level is set BEFORE the effects, so drive / compressor / limiter act on the real output level */
+    float gain = inst->output_gain;
+    for (int i = 0; i < frames; i++) mono_buf[i] *= gain;
     fx_process(&inst->fx, mono_buf, fl, fr, frames);
 
-    float gain = inst->output_gain;
     for (int i = 0; i < frames; i++) {
-        float sl = fl[i] * gain, sr = fr[i] * gain;
-        if (sl > 0.9f || sl < -0.9f) sl = tanhf(sl);
-        if (sr > 0.9f || sr < -0.9f) sr = tanhf(sr);
-
+        float sl = fl[i], sr = fr[i];
+        if (!(sl == sl) || !(sr == sr)) { sl = 0.0f; sr = 0.0f; }   /* NaN guard */
+        sl = fx_softclip(sl); sr = fx_softclip(sr);                  /* continuous: no steps, never reaches full scale */
         int32_t a = (int32_t)(sl * 32767.0f), b = (int32_t)(sr * 32767.0f);
         if (a > 32767) a = 32767;
         if (a < -32768) a = -32768;

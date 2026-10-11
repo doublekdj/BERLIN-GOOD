@@ -1,5 +1,5 @@
 {
- "name": "Berlin Good",
+ "name": "Berlin Mood",
  "params": [
   {
    "key": "osc1_wave",
@@ -295,7 +295,7 @@
    "key": "preset",
    "name": "PATCH",
    "min": 0,
-   "max": 17,
+   "max": 273,
    "default": 0,
    "display": "int",
    "type": "stepper"
@@ -410,6 +410,231 @@
   {
    "key": "sh_damp",
    "name": "SHIMMER DAMP",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "dr_on",
+   "name": "DRIVE ON",
+   "options": [
+    "OFF",
+    "ON"
+   ]
+  },
+  {
+   "key": "dr_type",
+   "name": "DRIVE TYPE",
+   "options": [
+    "SATURATOR",
+    "OVERDRIVE",
+    "DISTORTION"
+   ]
+  },
+  {
+   "key": "dr_drive",
+   "name": "DRIVE AMOUNT",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "dr_tone",
+   "name": "DRIVE TONE",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "dr_mix",
+   "name": "DRIVE MIX",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "ph_on",
+   "name": "PHASER ON",
+   "options": [
+    "OFF",
+    "ON"
+   ]
+  },
+  {
+   "key": "dl_on",
+   "name": "DELAY ON",
+   "options": [
+    "OFF",
+    "ON"
+   ]
+  },
+  {
+   "key": "rv_on",
+   "name": "REVERB ON",
+   "options": [
+    "OFF",
+    "ON"
+   ]
+  },
+  {
+   "key": "rv_type",
+   "name": "REVERB TYPE",
+   "options": [
+    "PLATE",
+    "ROOM",
+    "HALL"
+   ]
+  },
+  {
+   "key": "cp_on",
+   "name": "COMP ON",
+   "options": [
+    "OFF",
+    "ON"
+   ]
+  },
+  {
+   "key": "cp_thresh",
+   "name": "COMP THRESH",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "cp_ratio",
+   "name": "COMP RATIO",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "cp_attack",
+   "name": "COMP ATTACK",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "cp_release",
+   "name": "COMP RELEASE",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "cp_makeup",
+   "name": "COMP MAKE-UP",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "lm_on",
+   "name": "LIMITER ON",
+   "options": [
+    "OFF",
+    "ON"
+   ]
+  },
+  {
+   "key": "lm_ceil",
+   "name": "LIMIT CEILING",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "lm_release",
+   "name": "LIMIT RELEASE",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "arp_on",
+   "name": "ARP ON",
+   "options": [
+    "OFF",
+    "ON"
+   ]
+  },
+  {
+   "key": "arp_hold",
+   "name": "ARP HOLD",
+   "options": [
+    "OFF",
+    "ON"
+   ]
+  },
+  {
+   "key": "arp_dir",
+   "name": "ARP DIRECTION",
+   "options": [
+    "UP",
+    "DOWN",
+    "UP-DOWN",
+    "RANDOM"
+   ]
+  },
+  {
+   "key": "arp_pat",
+   "name": "ARP PATTERN",
+   "options": [
+    "CHORD",
+    "PULSE",
+    "OCTAVES",
+    "FIFTHS",
+    "PHAEDRA",
+    "RUBYCON",
+    "STRATOS",
+    "TANGRAM",
+    "CYCLONE",
+    "MINOR CLIMB",
+    "DORIAN",
+    "OPTIC",
+    "GAPPED",
+    "SYNCOPATED",
+    "16 STEP",
+    "DESCENT"
+   ]
+  },
+  {
+   "key": "arp_rate",
+   "name": "ARP RATE",
+   "options": [
+    "1/4",
+    "1/8",
+    "1/8T",
+    "1/16",
+    "1/16T",
+    "1/32"
+   ]
+  },
+  {
+   "key": "arp_oct",
+   "name": "ARP OCTAVES",
+   "options": [
+    "1 OCT",
+    "2 OCT",
+    "3 OCT"
+   ]
+  },
+  {
+   "key": "arp_gate",
+   "name": "ARP GATE",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "macro1",
+   "name": "MACRO OPEN",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "macro2",
+   "name": "MACRO SPACE",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "macro3",
+   "name": "MACRO ECHO",
+   "min": 0.0,
+   "max": 1.0
+  },
+  {
+   "key": "macro4",
+   "name": "MACRO PHASE",
    "min": 0.0,
    "max": 1.0
   }

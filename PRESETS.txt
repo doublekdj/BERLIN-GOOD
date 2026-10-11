@@ -1,0 +1,261 @@
+Berlin Mood presets (patch number = position in the list, counting from 1 after the 14 RaffoSynth patches)
+ 15  Phaedra Seq
+ 16  Rubycon Pad
+ 17  Stratosfear Lead
+ 18  Tangram Bass
+ 19  Phaedra Seq Amber
+ 20  Phaedra Seq Dusk
+ 21  Phaedra Seq Glass
+ 22  Phaedra Seq Ember
+ 23  Phaedra Seq Frost
+ 24  Phaedra Seq Neon
+ 25  Phaedra Seq Haze
+ 26  Phaedra Seq Iron
+ 27  Phaedra Seq Moss
+ 28  Phaedra Seq Tide
+ 29  Phaedra Seq Silk
+ 30  Phaedra Seq Smoke
+ 31  Phaedra Seq Dawn
+ 32  Phaedra Seq Onyx
+ 33  Phaedra Seq Coral
+ 34  Phaedra Seq Static
+ 35  Rubycon Pad Amber
+ 36  Rubycon Pad Dusk
+ 37  Rubycon Pad Glass
+ 38  Rubycon Pad Ember
+ 39  Rubycon Pad Frost
+ 40  Rubycon Pad Neon
+ 41  Rubycon Pad Haze
+ 42  Rubycon Pad Iron
+ 43  Rubycon Pad Moss
+ 44  Rubycon Pad Tide
+ 45  Rubycon Pad Silk
+ 46  Rubycon Pad Smoke
+ 47  Rubycon Pad Dawn
+ 48  Rubycon Pad Onyx
+ 49  Rubycon Pad Coral
+ 50  Rubycon Pad Static
+ 51  Ricochet Lead Amber
+ 52  Ricochet Lead Dusk
+ 53  Ricochet Lead Glass
+ 54  Ricochet Lead Ember
+ 55  Ricochet Lead Frost
+ 56  Ricochet Lead Neon
+ 57  Ricochet Lead Haze
+ 58  Ricochet Lead Iron
+ 59  Ricochet Lead Moss
+ 60  Ricochet Lead Tide
+ 61  Ricochet Lead Silk
+ 62  Ricochet Lead Smoke
+ 63  Ricochet Lead Dawn
+ 64  Ricochet Lead Onyx
+ 65  Ricochet Lead Coral
+ 66  Ricochet Lead Static
+ 67  Stratos Lead Amber
+ 68  Stratos Lead Dusk
+ 69  Stratos Lead Glass
+ 70  Stratos Lead Ember
+ 71  Stratos Lead Frost
+ 72  Stratos Lead Neon
+ 73  Stratos Lead Haze
+ 74  Stratos Lead Iron
+ 75  Stratos Lead Moss
+ 76  Stratos Lead Tide
+ 77  Stratos Lead Silk
+ 78  Stratos Lead Smoke
+ 79  Stratos Lead Dawn
+ 80  Stratos Lead Onyx
+ 81  Stratos Lead Coral
+ 82  Stratos Lead Static
+ 83  Tangram Bass Amber
+ 84  Tangram Bass Dusk
+ 85  Tangram Bass Glass
+ 86  Tangram Bass Ember
+ 87  Tangram Bass Frost
+ 88  Tangram Bass Neon
+ 89  Tangram Bass Haze
+ 90  Tangram Bass Iron
+ 91  Tangram Bass Moss
+ 92  Tangram Bass Tide
+ 93  Tangram Bass Silk
+ 94  Tangram Bass Smoke
+ 95  Tangram Bass Dawn
+ 96  Tangram Bass Onyx
+ 97  Tangram Bass Coral
+ 98  Tangram Bass Static
+ 99  Cyclone Seq Amber
+100  Cyclone Seq Dusk
+101  Cyclone Seq Glass
+102  Cyclone Seq Ember
+103  Cyclone Seq Frost
+104  Cyclone Seq Neon
+105  Cyclone Seq Haze
+106  Cyclone Seq Iron
+107  Cyclone Seq Moss
+108  Cyclone Seq Tide
+109  Cyclone Seq Silk
+110  Cyclone Seq Smoke
+111  Cyclone Seq Dawn
+112  Cyclone Seq Onyx
+113  Cyclone Seq Coral
+114  Cyclone Seq Static
+115  Force Choir Amber
+116  Force Choir Dusk
+117  Force Choir Glass
+118  Force Choir Ember
+119  Force Choir Frost
+120  Force Choir Neon
+121  Force Choir Haze
+122  Force Choir Iron
+123  Force Choir Moss
+124  Force Choir Tide
+125  Force Choir Silk
+126  Force Choir Smoke
+127  Force Choir Dawn
+128  Force Choir Onyx
+129  Force Choir Coral
+130  Force Choir Static
+131  Hyper Drone Amber
+132  Hyper Drone Dusk
+133  Hyper Drone Glass
+134  Hyper Drone Ember
+135  Hyper Drone Frost
+136  Hyper Drone Neon
+137  Hyper Drone Haze
+138  Hyper Drone Iron
+139  Hyper Drone Moss
+140  Hyper Drone Tide
+141  Hyper Drone Silk
+142  Hyper Drone Smoke
+143  Hyper Drone Dawn
+144  Hyper Drone Onyx
+145  Hyper Drone Coral
+146  Hyper Drone Static
+147  White Bell Amber
+148  White Bell Dusk
+149  White Bell Glass
+150  White Bell Ember
+151  White Bell Frost
+152  White Bell Neon
+153  White Bell Haze
+154  White Bell Iron
+155  White Bell Moss
+156  White Bell Tide
+157  White Bell Silk
+158  White Bell Smoke
+159  White Bell Dawn
+160  White Bell Onyx
+161  White Bell Coral
+162  White Bell Static
+163  Sorcerer Mist Amber
+164  Sorcerer Mist Dusk
+165  Sorcerer Mist Glass
+166  Sorcerer Mist Ember
+167  Sorcerer Mist Frost
+168  Sorcerer Mist Neon
+169  Sorcerer Mist Haze
+170  Sorcerer Mist Iron
+171  Sorcerer Mist Moss
+172  Sorcerer Mist Tide
+173  Sorcerer Mist Silk
+174  Sorcerer Mist Smoke
+175  Sorcerer Mist Dawn
+176  Sorcerer Mist Onyx
+177  Sorcerer Mist Coral
+178  Sorcerer Mist Static
+179  Logos Pulse Amber
+180  Logos Pulse Dusk
+181  Logos Pulse Glass
+182  Logos Pulse Ember
+183  Logos Pulse Frost
+184  Logos Pulse Neon
+185  Logos Pulse Haze
+186  Logos Pulse Iron
+187  Logos Pulse Moss
+188  Logos Pulse Tide
+189  Logos Pulse Silk
+190  Logos Pulse Smoke
+191  Logos Pulse Dawn
+192  Logos Pulse Onyx
+193  Logos Pulse Coral
+194  Logos Pulse Static
+195  Thief Bass Amber
+196  Thief Bass Dusk
+197  Thief Bass Glass
+198  Thief Bass Ember
+199  Thief Bass Frost
+200  Thief Bass Neon
+201  Thief Bass Haze
+202  Thief Bass Iron
+203  Thief Bass Moss
+204  Thief Bass Tide
+205  Thief Bass Silk
+206  Thief Bass Smoke
+207  Thief Bass Dawn
+208  Thief Bass Onyx
+209  Thief Bass Coral
+210  Thief Bass Static
+211  Exit Strings Amber
+212  Exit Strings Dusk
+213  Exit Strings Glass
+214  Exit Strings Ember
+215  Exit Strings Frost
+216  Exit Strings Neon
+217  Exit Strings Haze
+218  Exit Strings Iron
+219  Exit Strings Moss
+220  Exit Strings Tide
+221  Exit Strings Silk
+222  Exit Strings Smoke
+223  Exit Strings Dawn
+224  Exit Strings Onyx
+225  Exit Strings Coral
+226  Exit Strings Static
+227  Optic Arp Amber
+228  Optic Arp Dusk
+229  Optic Arp Glass
+230  Optic Arp Ember
+231  Optic Arp Frost
+232  Optic Arp Neon
+233  Optic Arp Haze
+234  Optic Arp Iron
+235  Optic Arp Moss
+236  Optic Arp Tide
+237  Optic Arp Silk
+238  Optic Arp Smoke
+239  Optic Arp Dawn
+240  Optic Arp Onyx
+241  Optic Arp Coral
+242  Optic Arp Static
+243  Poland Brass Amber
+244  Poland Brass Dusk
+245  Poland Brass Glass
+246  Poland Brass Ember
+247  Poland Brass Frost
+248  Poland Brass Neon
+249  Poland Brass Haze
+250  Poland Brass Iron
+251  Poland Brass Moss
+252  Poland Brass Tide
+253  Poland Brass Silk
+254  Poland Brass Smoke
+255  Poland Brass Dawn
+256  Poland Brass Onyx
+257  Poland Brass Coral
+258  Poland Brass Static
+259  Le Parc Flute Amber
+260  Le Parc Flute Dusk
+261  Le Parc Flute Glass
+262  Le Parc Flute Ember
+263  Le Parc Flute Frost
+264  Le Parc Flute Neon
+265  Le Parc Flute Haze
+266  Le Parc Flute Iron
+267  Le Parc Flute Moss
+268  Le Parc Flute Tide
+269  Le Parc Flute Silk
+270  Le Parc Flute Smoke
+271  Le Parc Flute Dawn
+272  Le Parc Flute Onyx
+273  Le Parc Flute Coral
+274  Le Parc Flute Static

@@ -21,4 +21,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Berlin Good additions (src/dsp/fx.h, FX page, Berlin patches) Copyright (c) 2026 KK (Angelo Raggi), released under the same MIT terms.
+Berlin Mood additions (src/dsp/fx.h, src/dsp/arp.h, pages, macros, Berlin patches) Copyright (c) 2026 Angelo Raggi (KK), released under the same MIT terms.
