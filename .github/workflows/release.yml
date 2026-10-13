@@ -24,7 +24,7 @@ jobs:
       vst_dir: .
       build: bash "$MPC_VST/tools/build_port.sh" vst.json
       host_test: '"$MPC_VST/tools/test_port.sh" vst.json'
-      plugin_id: berlingood
+      plugin_id: berlinkmood
       license: MIT
-      about: "Berlin Good: Minimoog-style mono synth with Berlin School phaser, dotted stereo delay and shimmer reverb."
+      about: "BERLIN K-MOOD: four-oscillator Berlin School synthesizer with arpeggiator, dotted stereo delay, phaser and shimmer reverb."
       dry_run: ${{ inputs.dry_run }}
