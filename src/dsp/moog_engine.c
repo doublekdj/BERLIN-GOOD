@@ -435,12 +435,12 @@ void moog_engine_render(moog_engine_t *engine, float *output, int frames) {
         float lfo_val = sinf(engine->lfo_phase * 2.0f * (float)M_PI);
 
         /* Apply mod wheel modulation to LFO depths */
-        /* mod wheel: vibrato (LFO), its depth set by Mod>Pitch; LFO>Pitch adds to it */
+        /* mod wheel: restrained vibrato (max +/- 50 cents), depth set by Mod>Pitch; LFO>Pitch adds to it */
         float pitch_mod = lfo_val * engine->mod_wheel * engine->mod_to_pitch * (0.2f + 0.8f * engine->lfo_depth_pitch);
 
         /* Pitch modulation */
         if (fabsf(pitch_mod) > 0.0001f) {
-            double mod_ratio = pow(2.0, pitch_mod * 2.0 / 12.0);
+            double mod_ratio = pow(2.0, pitch_mod * 0.5 / 12.0);
             current_period /= mod_ratio;
         }
 
