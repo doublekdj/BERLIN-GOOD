@@ -516,10 +516,17 @@ void moog_engine_render(moog_engine_t *engine, float *output, int frames) {
                 key_track = (engine->current_note - 60) / 127.0f * engine->filter_key_follow;
             }
 
-            /* LFO filter modulation (lfo_val already computed above) */
+            /* LFO filter modulation (lfo_val already computed above). */
             float lfo_filt = lfo_val * engine->lfo_depth_filter * engine->mod_to_filter * 0.3f;
 
-            float cutoff_normalized = clampf(base_cutoff + filt_env_mod + key_track + lfo_filt, 0.0f, 1.0f);
+            /* The physical MIDI modulation wheel (CC1) must also open the
+             * filter directly. Previously CC1 only scaled the LFO depths,
+             * so moving the wheel did nothing to cutoff when LFO>Filter was 0.
+             * A positive, exponential-cutoff offset gives a clear sweep while
+             * keeping Mod>Filter as the amount control. */
+            float wheel_filt = engine->mod_wheel * engine->mod_to_filter * 0.65f;
+
+            float cutoff_normalized = clampf(base_cutoff + filt_env_mod + key_track + lfo_filt + wheel_filt, 0.0f, 1.0f);
 
             /* Map normalized cutoff to Hz (exponential: 20Hz to 20kHz) */
             float cutoff_hz = 20.0f * powf(1000.0f, cutoff_normalized);
