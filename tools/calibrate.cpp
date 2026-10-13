@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
         // the peak after scaling must stay under the soft clip
         if (peak > 1e-5 && peak * want > 0.9) t = cur * 0.9 / peak;
         if (t < 0.01) t = 0.01;
-        if (t > 8.0) t = 8.0;
+        if (t > 24.0) t = 24.0;
         trim[p] = (float)t; if (getenv("CAL_DEBUG")) fprintf(stderr, "%3d rms %.1f dB peak %.2f trim %.2f -> %.2f\n", p, 20*log10(best+1e-9), peak, cur, t);
         if (best < lo) lo = best; if (best > hi) hi = best;
     }

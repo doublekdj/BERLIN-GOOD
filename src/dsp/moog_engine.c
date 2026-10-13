@@ -436,7 +436,7 @@ void moog_engine_render(moog_engine_t *engine, float *output, int frames) {
 
         /* Apply mod wheel modulation to LFO depths */
         /* mod wheel: vibrato (LFO), its depth set by Mod>Pitch; LFO>Pitch adds to it */
-        float pitch_mod = lfo_val * engine->mod_wheel * engine->mod_to_pitch * (0.2f + 0.8f * engine->lfo_depth_pitch);
+        float pitch_mod = 0.0f;   /* the wheel never moves the pitch: it opens the cutoff and (per patch) the effects */
 
         /* Pitch modulation */
         if (fabsf(pitch_mod) > 0.0001f) {
@@ -521,7 +521,7 @@ void moog_engine_render(moog_engine_t *engine, float *output, int frames) {
             float lfo_filt = lfo_val * engine->lfo_depth_filter * engine->mod_to_filter * 0.3f;
 
             /* mod wheel opens the filter (amount: Mod>Filter) */
-            float wheel_filt = engine->mod_wheel * engine->mod_to_filter * 0.5f;
+            float wheel_filt = engine->mod_wheel * engine->mod_to_filter * 0.65f;
 
             float cutoff_normalized = clampf(base_cutoff + filt_env_mod + key_track + lfo_filt + wheel_filt, 0.0f, 1.0f);
 

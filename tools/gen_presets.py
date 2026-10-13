@@ -139,6 +139,45 @@ FAMILIES = [
         osc2_detune=0.5, noise=0.04, cutoff=0.6, resonance=0.15, contour=0.15, attack=0.12, decay=0.4, sustain=0.8,
         release=0.3, f_attack=0.1, lfo_rate=0.35, lfo_pitch=0.08, ph_on=0, dl_on=1, dl_div=0, dl_fb=0.4, dl_mix=0.3,
         rv_on=1, rv_type=1, sh_decay=0.5, sh_mix=0.3), None),
+    ("Timewind Seq", mk(osc1_volume=0.8, cutoff=0.45, resonance=0.4, contour=0.5, attack=0.0, decay=0.25, sustain=0.15,
+        release=0.15, f_decay=0.25, f_sustain=0.1, arp_on=1, arp_gate=0.5),
+     dict(pats=[4, 9, 5, 3, 14, 11, 2, 6], dirs=[0, 0, 2, 0])),
+    ("Mirage Pad", mk(osc1_volume=0.75, osc1_range=0, cutoff=0.55, resonance=0.2, contour=0.15, attack=0.5,
+        decay=0.5, sustain=0.85, release=0.6, f_attack=0.4, f_sustain=0.55, lfo_rate=0.1, lfo_filter=0.2), None),
+    ("Moondawn Seq", mk(osc1_volume=0.8, osc1_range=-1, cutoff=0.4, resonance=0.45, contour=0.55, attack=0.0,
+        decay=0.2, sustain=0.1, release=0.12, f_decay=0.22, f_sustain=0.05, arp_on=1, arp_gate=0.45),
+     dict(pats=[8, 6, 4, 3, 10, 13, 7, 9], dirs=[0, 0, 2, 3])),
+    ("Cyborg Arp", mk(osc1_volume=0.75, osc1_range=0, cutoff=0.55, resonance=0.35, contour=0.45, attack=0.0,
+        decay=0.18, sustain=0.1, release=0.12, f_decay=0.2, f_sustain=0.05, arp_on=1, arp_gate=0.5),
+     dict(pats=[1, 11, 12, 2, 5, 14, 0, 9], dirs=[0, 1, 0, 3], octs=[1, 2, 0, 1])),
+    ("Body Love Bass", mk(osc1_volume=0.9, osc1_range=-2, cutoff=0.32, resonance=0.4, contour=0.55, attack=0.0,
+        decay=0.22, sustain=0.3, release=0.12, f_decay=0.2, f_sustain=0.05, arp_on=1, arp_gate=0.6),
+     dict(pats=[7, 1, 13, 3, 2, 8, 12, 14], dirs=[0, 0, 0, 2])),
+    ("Dune Drone", mk(osc1_volume=0.8, osc1_range=-2, cutoff=0.32, resonance=0.2, contour=0.1, attack=0.65,
+        decay=0.5, sustain=1.0, release=0.85, f_attack=0.5, f_sustain=0.6, lfo_rate=0.07, lfo_filter=0.3), None),
+    ("Picture Music", mk(osc1_volume=0.75, osc1_range=0, cutoff=0.5, resonance=0.25, contour=0.35, attack=0.02,
+        decay=0.35, sustain=0.6, release=0.3, lfo_rate=0.3), None),
+    ("Trancefer Lead", mk(osc1_volume=0.8, osc1_range=0, cutoff=0.6, resonance=0.35, contour=0.4, attack=0.02,
+        decay=0.3, sustain=0.75, release=0.3, glide=0.15), None),
+    ("Crystal Lake", mk(osc1_volume=0.75, osc1_range=1, cutoff=0.65, resonance=0.2, contour=0.3, attack=0.0,
+        decay=0.4, sustain=0.1, release=0.4, f_decay=0.4, f_sustain=0.1, arp_on=1, arp_gate=0.4),
+     dict(pats=[5, 12, 4, 9, 13, 6, 11, 2], dirs=[0, 2, 0, 3], octs=[1, 2, 1, 0])),
+    ("Velvet Organ", mk(osc1_volume=0.75, osc1_range=0, cutoff=0.55, resonance=0.1, contour=0.05, attack=0.05,
+        decay=0.3, sustain=0.95, release=0.35, f_sustain=0.7), None),
+    ("Irrlicht Choir", mk(osc1_volume=0.7, osc1_range=0, cutoff=0.45, resonance=0.4, contour=0.1, attack=0.55,
+        decay=0.4, sustain=0.85, release=0.65, f_attack=0.4, lfo_rate=0.12, lfo_filter=0.25), None),
+    ("Echoes Bell", mk(osc1_volume=0.8, osc1_range=1, cutoff=0.7, resonance=0.2, contour=0.3, attack=0.0,
+        decay=0.5, sustain=0.0, release=0.45, f_decay=0.45, f_sustain=0.0), None),
+    ("Ion Pulse", mk(osc1_volume=0.8, osc1_range=-1, cutoff=0.5, resonance=0.4, contour=0.45, attack=0.0, decay=0.18,
+        sustain=0.1, release=0.12, f_decay=0.2, f_sustain=0.05, arp_on=1, arp_gate=0.5),
+     dict(pats=[6, 13, 14, 10, 4, 7, 12, 3], dirs=[0, 0, 2, 0])),
+    ("Aurora Pad", mk(osc1_volume=0.75, osc1_range=0, cutoff=0.6, resonance=0.15, contour=0.15, attack=0.4,
+        decay=0.5, sustain=0.85, release=0.55, f_attack=0.35, f_sustain=0.6, lfo_rate=0.15, lfo_filter=0.15), None),
+    ("Sequencer Rain", mk(osc1_volume=0.75, osc1_range=1, cutoff=0.6, resonance=0.3, contour=0.4, attack=0.0,
+        decay=0.2, sustain=0.1, release=0.15, f_decay=0.22, f_sustain=0.05, arp_on=1, arp_gate=0.4),
+     dict(pats=[9, 11, 5, 10, 14, 4, 6, 12], dirs=[0, 2, 0, 3], octs=[1, 0, 2, 1])),
+    ("Wave Glass", mk(osc1_volume=0.75, osc1_range=0, cutoff=0.65, resonance=0.3, contour=0.35, attack=0.03,
+        decay=0.3, sustain=0.7, release=0.3, lfo_rate=0.35), None),
 ]
 
 # the four hand-made patches that shipped in v1.0 (now with their effects switched on)
@@ -177,10 +216,10 @@ BRIGHT = {"Phaedra Seq": 0.2, "Rubycon Pad": 0.22, "Ricochet Lead": 0.2, "Strato
           "Tangram Bass": 0.12, "Cyclone Seq": 0.2, "Force Choir": 0.22, "Hyper Drone": 0.2, "White Bell": 0.1,
           "Sorcerer Mist": 0.2, "Logos Pulse": 0.18, "Thief Bass": 0.12, "Exit Strings": 0.24, "Optic Arp": 0.2,
           "Poland Brass": 0.18, "Le Parc Flute": 0.14}
-PLUCKS = {"Phaedra Seq", "Tangram Bass", "Cyclone Seq", "Logos Pulse", "Thief Bass", "Optic Arp", "White Bell"}
-PADS = {"Rubycon Pad", "Force Choir", "Exit Strings", "Hyper Drone", "Sorcerer Mist"}
-BASSES = {"Tangram Bass", "Thief Bass"}
-LEADS = {"Ricochet Lead", "Stratos Lead", "Stratosfear Lead", "Le Parc Flute", "Poland Brass", "Optic Arp"}
+PLUCKS = {"Timewind Seq", "Moondawn Seq", "Cyborg Arp", "Ion Pulse", "Sequencer Rain", "Crystal Lake", "Echoes Bell", "Phaedra Seq", "Tangram Bass", "Cyclone Seq", "Logos Pulse", "Thief Bass", "Optic Arp", "White Bell"}
+PADS = {"Mirage Pad", "Dune Drone", "Velvet Organ", "Irrlicht Choir", "Aurora Pad", "Rubycon Pad", "Force Choir", "Exit Strings", "Hyper Drone", "Sorcerer Mist"}
+BASSES = {"Body Love Bass", "Tangram Bass", "Thief Bass"}
+LEADS = {"Trancefer Lead", "Wave Glass", "Picture Music", "Ricochet Lead", "Stratos Lead", "Stratosfear Lead", "Le Parc Flute", "Poland Brass", "Optic Arp"}
 
 
 def brighten(name, p):
@@ -205,125 +244,145 @@ def brighten(name, p):
     p["arp_hold"] = 0
 
 
-# effect profiles: 16 steps, each family walks through them in a different order, so every family has dry,
-# medium and very wet patches, with and without phaser / drive / delay
-RV_MIX = [0.0, 0.3, 0.5, 0.7, 0.35, 0.6, 0.0, 0.45, 0.8, 0.25, 0.55, 0.4, 0.65, 0.3, 0.5, 0.75]
-DL_MIX = [0.0, 0.25, 0.4, 0.55, 0.0, 0.35, 0.5, 0.3, 0.6, 0.0, 0.45, 0.35, 0.5, 0.25, 0.0, 0.4]
-PH_MIX = [0.0, 0.6, 0.8, 0.0, 0.7, 0.9, 0.5, 0.0, 0.75, 0.65, 0.0, 0.85, 0.55, 0.7, 0.0, 0.8]
-DR_AMT = [0.0, 0.0, 0.4, 0.0, 0.0, 0.55, 0.0, 0.3, 0.0, 0.0, 0.7, 0.0, 0.45, 0.0, 0.0, 0.6]
+def pick(r, items):
+    return items[r.randrange(len(items))]
 
 
-# oscillator recipes: (wave1, wave2, wave3, octave offset of osc2, of osc3, detune2, detune3); wave 0 triangle, 1 saw,
-# 2 square, 3 pulse. A None wave switches that oscillator off.
-RECIPES = [(1, 1, None, 0, 0, 0.54, 0.5), (2, 1, 2, 0, -1, 0.5, 0.5), (1, 2, None, 1, 0, 0.5, 0.5),
-           (3, 1, 1, 0, -1, 0.47, 0.53), (2, 2, 1, 0, 1, 0.52, 0.5), (1, 0, 2, -1, -1, 0.5, 0.5),
-           (0, 1, None, 0, 0, 0.5, 0.5), (2, None, None, 0, 0, 0.5, 0.5), (1, None, None, 0, 0, 0.5, 0.5),
-           (1, 1, 1, 0, -1, 0.45, 0.55), (2, 3, None, 1, 0, 0.5, 0.5), (3, 2, None, 0, 0, 0.53, 0.5),
-           (1, 2, 2, -1, 0, 0.5, 0.5), (2, 1, None, 1, 0, 0.56, 0.5), (3, None, None, 0, 0, 0.5, 0.5),
-           (1, 3, 0, 0, -1, 0.49, 0.5)]
-SHIFT = [0, 0, 1, 0, -1, 0, 1, 0, 0, -1, 1, 0, 0, 1, -1, 0]
+def role_of(name):
+    if name in BASSES or name == "Body Love Bass":
+        return "bass"
+    if name in PADS:
+        return "pad"
+    if name in LEADS:
+        return "lead"
+    if name in PLUCKS:
+        return "pluck"
+    return "other"
 
 
-def apply_recipe(fi, vi, name, p):
-    w1, w2, w3, o2, o3, d2, d3 = RECIPES[(vi * 5 + fi * 3) % 16]
-    lo, hi = (-2, -1) if name in BASSES else ((-1, 1) if name in LEADS else (-2, 1))
-    r1 = max(lo, min(hi, p["osc1_range"] + SHIFT[(vi * 3 + fi) % 16]))
-    p["osc1_wave"], p["osc1_range"] = w1, r1
-    for n_, w, o, d, v in ((2, w2, o2, d2, 0.55), (3, w3, o3, d3, 0.4)):
-        if w is None:
-            p["osc%d_volume" % n_] = 0.0
-            continue
-        p["osc%d_wave" % n_] = w
-        p["osc%d_range" % n_] = max(-2, min(2, r1 + o))
-        p["osc%d_detune" % n_] = d
-        p["osc%d_volume" % n_] = max(p["osc%d_volume" % n_], v)
+WM = [1, 2, 4, 3, 5, 6, 7, 1, 2, 4, 3, 1]   # wheel destination bitmask (cutoff always): 1 reverb, 2 delay, 4 phaser
 
 
 def variant(fi, vi, name, base, arp):
-    r = random.Random(1000 * (fi + 1) + vi)
+    n = fi * 16 + vi
+    r = random.Random(7919 * (n + 1))
     p = dict(base)
+    role = role_of(name)
 
-    def jit(k, amt, lo=0.0, hi=1.0):
-        p[k] = max(lo, min(hi, p[k] + r.uniform(-amt, amt)))
+    # ---- timbre: all four oscillators, random waves / octaves / detune / levels ----
+    nosc = pick(r, [1, 2, 2, 2, 3, 3, 3, 4, 4])
+    if role == "pad":
+        nosc = max(nosc, 2)
+    waves = [pick(r, [1, 1, 1, 2, 2, 3, 3, 0]) for _ in range(4)]
+    if nosc > 1 and waves[1] == waves[0] and r.random() < 0.7:
+        waves[1] = pick(r, [w for w in (0, 1, 2, 3) if w != waves[0]])
+    lo, hi = {"bass": (-2, -1), "lead": (-1, 1), "pad": (-1, 1)}.get(role, (-2, 1))
+    r1 = max(lo, min(hi, p["osc1_range"] + pick(r, [0, 0, 0, -1, 1])))
+    offs = [0, pick(r, [0, 0, -1, 1, 1, 2, -2]), pick(r, [0, -1, -1, 1, 2, -2]), pick(r, [0, 1, 2, -1, -2])]
+    dets = [0.5, pick(r, [0.5, 0.46, 0.54, 0.42, 0.58, 0.37, 0.63]), pick(r, [0.5, 0.45, 0.55, 0.4, 0.6]),
+            pick(r, [0.5, 0.48, 0.52, 0.44, 0.56])]
+    p["osc1_wave"], p["osc1_range"] = waves[0], r1
+    p["osc1_volume"] = r.uniform(0.6, 0.9)
+    for k in (1, 2, 3):
+        key = "osc%d_" % (k + 1)
+        if k >= nosc:
+            p[key + "volume"] = 0.0
+            p[key + "wave"] = waves[k]
+            continue
+        p[key + "wave"] = waves[k]
+        p[key + "range"] = max(-2, min(2, r1 + offs[k]))
+        p[key + "detune"] = dets[k]
+        p[key + "volume"] = r.uniform(0.3, 0.75) if k < 3 else r.uniform(0.25, 0.55)
+    p["noise"] = r.uniform(0.03, 0.1) if r.random() < 0.1 else 0.0
 
-    # tone and envelopes
-    p["cutoff"] = max(0.22, min(0.92, p["cutoff"] + ((vi % 5) - 2) * 0.03 + r.uniform(-0.03, 0.03)))
-    jit("resonance", 0.1, 0.05, 0.7)
-    jit("contour", 0.12)
+    # ---- filter / envelopes ----
+    p["cutoff"] = max(0.3, min(0.9, p["cutoff"] + r.uniform(-0.12, 0.2)))
+    p["resonance"] = r.uniform(0.05, 0.62)
+    p["contour"] = max(0.0, min(0.75, p["contour"] + r.uniform(-0.2, 0.2)))
+    p["key_follow"] = pick(r, [0.0, 0.0, 0.3, 0.5, 0.7])
     for k in ("decay", "release", "f_decay", "f_release"):
-        p[k] = max(0.0, min(1.0, p[k] * r.uniform(0.75, 1.3)))
+        p[k] = max(0.0, min(1.0, p[k] * r.uniform(0.7, 1.4)))
     if p["attack"] > 0.2:
-        p["attack"] = max(0.15, min(0.65, p["attack"] * r.uniform(0.7, 1.35)))
-    for k in ("osc2_detune", "osc3_detune"):
-        if p[k.replace("detune", "volume")] > 0:
-            jit(k, 0.035, 0.38, 0.62)
-    apply_recipe(fi, vi, name, p)
-    if vi % 6 == 1 and p["lfo_filter"] < 0.05:
-        p["lfo_filter"] = 0.12
-        p["lfo_rate"] = 0.12 + 0.05 * (vi % 4)
+        p["attack"] = max(0.12, min(0.7, p["attack"] * r.uniform(0.6, 1.4)))
+    if role == "lead":
+        p["glide"] = pick(r, [0.0, 0.08, 0.15, 0.25])
+    if r.random() < 0.4:
+        p["lfo_filter"] = r.uniform(0.1, 0.4)
+        p["lfo_rate"] = r.uniform(0.06, 0.55)
+    p["lfo_pitch"] = 0.0
+    p["mod_filter"] = r.uniform(0.75, 1.0)    # mod wheel -> cutoff
+    p["mod_pitch"] = 0.0                      # no pitch movement from the wheel
     brighten(name, p)
 
-    # effects
-    k = (vi + fi * 5) % 16
-    rv = RV_MIX[k]
-    p["rv_on"] = 1 if rv > 0 else 0
-    p["sh_mix"] = rv
-    p["rv_type"] = (fi + vi) % 3
-    p["sh_decay"] = max(0.15, min(0.95, 0.3 + 0.045 * ((vi * 7 + fi) % 16)))
-    p["sh_shimmer"] = [0.0, 0.0, 0.25, 0.45, 0.0, 0.6, 0.15, 0.0][(vi + fi) % 8]
-    p["sh_damp"] = 0.3 + 0.04 * ((vi * 3 + fi) % 10)
-    k = (vi * 3 + fi) % 16
-    dm = DL_MIX[k]
-    p["dl_on"] = 1 if dm > 0 else 0
-    p["dl_mix"] = dm
-    p["dl_div"] = [0, 0, 1, 2, 4, 0, 3, 1][(vi + fi) % 8]
-    p["dl_fb"] = 0.3 + 0.05 * ((vi + fi) % 6)
-    p["dl_tone"] = 0.4 + 0.05 * ((vi * 2 + fi) % 8)
-    k = (vi * 7 + fi * 3) % 16
-    pm = PH_MIX[k]
-    p["ph_on"] = 1 if pm > 0 else 0
-    p["ph_mix"] = pm
-    p["ph_rate"] = 0.08 + 0.05 * ((vi * 5 + fi) % 9)
-    p["ph_depth"] = 0.5 + 0.05 * ((vi + fi * 2) % 9)
-    p["ph_fb"] = 0.3 + 0.05 * ((vi * 3 + fi) % 8)
-    k = (vi * 5 + fi * 7) % 16
-    da = DR_AMT[k]
-    p["dr_on"] = 1 if da > 0 else 0
-    p["dr_type"] = (vi + fi) % 3
-    p["dr_drive"] = da
-    p["dr_mix"] = 0.5 + 0.05 * (vi % 7)
-    p["dr_tone"] = 0.45 + 0.04 * (vi % 8)
-    if vi in (0, 9):   # fully dry reference patches
+    # ---- effects ----
+    dry_ref = (n % 64 == 0)
+    # reverb: plate/room/hall, shimmer on about a third of the bank
+    shim = (n % 20) < 7
+    p["rv_on"] = 0 if (n % 17 == 5) else 1
+    p["rv_type"] = (n // 3) % 3
+    if shim:
+        p["sh_shimmer"] = r.uniform(0.45, 0.9)
+        p["sh_mix"] = r.uniform(0.4, 0.8)
+        p["sh_decay"] = r.uniform(0.6, 0.95)
+    else:
+        p["sh_shimmer"] = pick(r, [0.0, 0.0, 0.1, 0.2])
+        p["sh_mix"] = pick(r, [0.15, 0.25, 0.35, 0.45, 0.55, 0.65])
+        p["sh_decay"] = r.uniform(0.25, 0.85)
+    if role in ("pad", "other") and not shim:
+        p["sh_mix"] = max(p["sh_mix"], 0.35)
+    p["sh_damp"] = r.uniform(0.3, 0.7)
+    # delay: dotted eighth for arps
+    p["dl_on"] = 0 if (n % 9 in (3, 7)) else 1
+    if arp:
+        p["dl_on"] = 1 if (n % 9 != 3) else 0
+        p["dl_div"] = 0 if r.random() < 0.8 else pick(r, [1, 3])
+    else:
+        p["dl_div"] = pick(r, [0, 0, 1, 0, 3, 2, 4])
+    p["dl_mix"] = r.uniform(0.2, 0.6)
+    p["dl_fb"] = r.uniform(0.3, 0.62)
+    p["dl_tone"] = r.uniform(0.4, 0.75)
+    p["dl_sync"] = 0
+    # phaser in 30% of the bank
+    p["ph_on"] = 1 if (n % 10) in (1, 4, 8) else 0
+    p["ph_mix"] = r.uniform(0.5, 0.9)
+    p["ph_rate"] = r.uniform(0.08, 0.5)
+    p["ph_depth"] = r.uniform(0.5, 0.95)
+    p["ph_fb"] = r.uniform(0.3, 0.7)
+    # drive in about a quarter
+    p["dr_on"] = 1 if (n % 4 == 2) else 0
+    p["dr_type"] = (n // 4) % 3
+    p["dr_drive"] = r.uniform(0.3, 0.7)
+    p["dr_mix"] = r.uniform(0.45, 0.8)
+    p["dr_tone"] = r.uniform(0.45, 0.75)
+    if dry_ref:
         for key in ("rv_on", "dl_on", "ph_on", "dr_on"):
             p[key] = 0
-    if vi % 9 == 8:
+    if n % 9 == 8:
         p["cp_on"] = 1
         p["cp_makeup"] = 0.25
-    # arpeggiator / sequencer
+
+    # ---- arpeggiator: mostly eighth notes with dotted-eighth delay ----
     if arp:
-        pats = arp["pats"]
         p["arp_on"] = 1
-        p["arp_pat"] = pats[vi % len(pats)]
-        p["arp_rate"] = arp["rates"][(vi // 2) % len(arp["rates"])]
+        p["arp_pat"] = arp["pats"][vi % len(arp["pats"])]
+        slot = (vi * 3 + fi) % 10
+        p["arp_rate"] = 1 if slot < 8 else (0 if slot == 8 else 2)    # 80% 1/8, 10% 1/4, 10% 1/8T
         p["arp_dir"] = arp["dirs"][(vi // 3) % len(arp["dirs"])]
-        p["arp_gate"] = max(0.25, min(0.9, p["arp_gate"] + r.uniform(-0.15, 0.2)))
+        p["arp_gate"] = max(0.3, min(0.9, p["arp_gate"] + r.uniform(-0.1, 0.2)))
         if "octs" in arp:
             p["arp_oct"] = arp["octs"][vi % len(arp["octs"])]
         if vi % 7 == 6:
-            p["arp_dir"] = 3  # random every now and then
+            p["arp_dir"] = 3
     else:
         p["arp_on"] = 0
     p["arp_hold"] = 0
     p["lm_on"] = 1
-    return ("%s %s" % (name, TAGS[vi]), p)
+    wheel = WM[(n * 5 + fi) % len(WM)]
+    return ("%s %s" % (name, TAGS[vi]), p, wheel)
 
 
 def build():
     out = []
-    for n, p in HAND:
-        p = dict(p)
-        brighten(n, p)
-        out.append((n, p))
     for fi, (name, base, arp) in enumerate(FAMILIES):
         for vi in range(16):
             out.append(variant(fi, vi, name, base, arp))
@@ -333,17 +392,24 @@ def build():
 def main():
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     presets = build()
-    names = [n for n, _ in presets]
-    assert len(set(names[4:])) == 256, "preset names must be unique"
+    names = [n for n, _, _ in presets]
+    assert len(presets) == 512, len(presets)
+    assert len(set(names)) == len(names), "preset names must be unique"
     for n in names:
         assert len(n) <= 31, n
     lines = ["/* GENERATED by tools/gen_presets.py - do not edit. %d Berlin Mood presets. */" % len(presets),
              "#define BERLIN_PRESET_COUNT %d" % len(presets),
              "#define BERLIN_PRESET_VALUES %d" % len(ORDER),
              "static const struct { const char *name; float v[BERLIN_PRESET_VALUES]; } g_berlin_presets[BERLIN_PRESET_COUNT] = {"]
-    for n, p in presets:
+    for n, p, _ in presets:
         vals = ", ".join(("%d" % clamp(k, p[k])) if k in INT_KEYS else ("%.3ff" % clamp(k, p[k])) for k in ORDER)
         lines.append('    {"%s", {%s}},' % (n, vals))
+    lines.append("};")
+    lines.append("/* mod wheel destinations besides cutoff: bit0 reverb, bit1 delay, bit2 phaser */")
+    lines.append("static const unsigned char g_berlin_wheel[BERLIN_PRESET_COUNT] = {")
+    ws = [str(w) for _, _, w in presets]
+    for i in range(0, len(ws), 32):
+        lines.append("    " + ",".join(ws[i:i + 32]) + ",")
     lines.append("};")
     with open(os.path.join(root, "src", "dsp", "presets_berlin.h"), "w") as f:
         f.write("\n".join(lines) + "\n")
@@ -351,7 +417,9 @@ def main():
         f.write("Berlin Mood presets (patch number = position in the list, counting from 1 after the 14 RaffoSynth patches)\n")
         for i, n in enumerate(names):
             f.write("%3d  %s\n" % (15 + i, n))
-    print("wrote %d presets, %d values each" % (len(presets), len(ORDER)))
+    ph = sum(p["ph_on"] for _, p, _ in presets); ar = [p for _, p, _ in presets if p["arp_on"]]
+    print("wrote %d presets, %d values each; phaser %d, arp %d (1/8: %d)" % (
+        len(presets), len(ORDER), ph, len(ar), sum(1 for p in ar if p["arp_rate"] == 1)))
 
 
 if __name__ == "__main__":

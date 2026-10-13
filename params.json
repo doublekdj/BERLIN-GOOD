@@ -295,7 +295,7 @@
    "key": "preset",
    "name": "PATCH",
    "min": 0,
-   "max": 273,
+   "max": 525,
    "default": 0,
    "display": "int",
    "type": "stepper"

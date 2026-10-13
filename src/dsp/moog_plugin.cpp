@@ -254,7 +254,7 @@ static const param_def_t g_shadow_params[] = {
  * Preset system
  * ===================================================================== */
 
-#define MAX_PRESETS 300
+#define MAX_PRESETS 600
 
 struct MoogPreset {
     char name[32];
@@ -502,6 +502,8 @@ typedef struct {
     MoogPreset presets[MAX_PRESETS];
     float output_gain;
     float trim;
+    float wheel;        /* mod wheel 0..1 */
+    int wheel_mode;     /* bit0 reverb, bit1 delay, bit2 phaser (cutoff always) */
     int octave_transpose;
     fx_t fx;
     arp_t arp;
@@ -549,7 +551,11 @@ static void apply_params_to_engine(moog_instance_t *inst) {
 
     e->noise_volume      = inst->params[P_NOISE];
 
-    const float m1 = inst->params[P_MAC1], m2 = inst->params[P_MAC2], m3 = inst->params[P_MAC3], m4 = inst->params[P_MAC4];
+    const float wl = inst->wheel;
+    const float m1 = inst->params[P_MAC1];
+    const float m2 = fmaxf(inst->params[P_MAC2], (inst->wheel_mode & 1) ? wl : 0.0f);   /* reverb */
+    const float m3 = fmaxf(inst->params[P_MAC3], (inst->wheel_mode & 2) ? wl : 0.0f);   /* delay */
+    const float m4 = fmaxf(inst->params[P_MAC4], (inst->wheel_mode & 4) ? wl : 0.0f);   /* phaser */
     e->filter_cutoff     = mac_up(inst->params[P_FILTER_CUTOFF], m1);
     e->filter_resonance  = inst->params[P_FILTER_RESONANCE];
     e->filter_contour    = inst->params[P_FILTER_CONTOUR];
@@ -631,6 +637,7 @@ static void apply_preset(moog_instance_t *inst, int preset_idx) {
     MoogPreset *p = &inst->presets[preset_idx];
     memcpy(inst->params, p->params, sizeof(float) * P_COUNT);
     inst->trim = g_preset_trim[preset_idx];
+    inst->wheel_mode = preset_idx < FACTORY_PRESET_COUNT_CONST ? 1 : g_berlin_wheel[preset_idx - FACTORY_PRESET_COUNT_CONST];
     snprintf(inst->preset_name, sizeof(inst->preset_name), "%s", p->name);
     inst->current_preset = preset_idx;
 
@@ -665,6 +672,7 @@ static void* v2_create_instance(const char *module_dir, const char *json_default
     strncpy(inst->module_dir, module_dir, sizeof(inst->module_dir) - 1);
     inst->output_gain = 0.35f;
     inst->trim = 1.0f;
+    inst->wheel = 0.0f; inst->wheel_mode = 1;
 
     /* Initialize engine */
     moog_engine_init(&inst->engine);
@@ -735,6 +743,8 @@ static void v2_on_midi(void *instance, const uint8_t *msg, int len, int source) 
             switch (data1) {
                 case 1: /* Mod wheel */
                     moog_engine_mod_wheel(&inst->engine, data2 / 127.0f);
+                    inst->wheel = data2 / 127.0f;
+                    apply_params_to_engine(inst);
                     break;
                 case 64: /* Sustain */
                     break;

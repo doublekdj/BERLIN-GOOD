@@ -1,6 +1,6 @@
 # Berlin Mood
 
-Minimoog-style mono synth + effects, arpeggiator and 274 programs for the **Akai MPC (Gen 1, HAKAI / MPC OS standalone)**, built to get
+Minimoog-style mono synth + effects, arpeggiator and 526 programs for the **Akai MPC (Gen 1, HAKAI / MPC OS standalone)**, built to get
 Tangerine Dream / Berlin School sounds from the MPC itself.
 
 - **Voice**: RaffoSynth (4 oscillators, Moog ladder filter, contour envelopes, LFO, glide) — mono, low CPU.
@@ -17,12 +17,13 @@ Tangerine Dream / Berlin School sounds from the MPC itself.
   RANDOM, rate 1/4 .. 1/32, gate, 1-3 octaves, HOLD. Tempo from the MPC (or the manual BPM of the delay).
 - **4 macros** on the MAIN page (one Q-Link column): OPEN (filter cutoff), SPACE (reverb), ECHO (delay), PHASE (phaser).
   They add to the patch values, so they never overwrite a patch.
-- Mod wheel: opens the filter (WHEEL FILTER) and adds vibrato (WHEEL PITCH). LEGATO switch: off = every note retriggers the envelopes.
-- Every patch has its own level trim (tools/calibrate.sh), so all 274 programs play at a similar volume.
+- Mod wheel: opens the filter and, depending on the patch, adds reverb, delay and/or phaser (never any pitch change). LEGATO switch: off = every note retriggers the envelopes.
+- Every patch has its own level trim (tools/calibrate.sh), so all 526 programs play at a similar volume.
 - Pages: MAIN, OSCILLATORS, MODULATION, **FX MOD** (phaser, delay, reverb), **FX DYN** (drive, compressor, limiter), **ARP**.
   80 parameters, all on Q-Links and automatable.
-- **274 programs**: the 14 RaffoSynth ones (effects off), 4 hand-made Berlin patches and a bank of 256 Berlin School
-  patches (16 families x 16 variations, see PRESETS.txt). Some play their own sequence through the arpeggiator.
+- **526 programs**: the 14 RaffoSynth ones (effects off) and a bank of 512 Berlin School patches (32 families x 16
+  variations, see PRESETS.txt): all four oscillators, varied waves/octaves/detune, phaser in ~30%, shimmer reverbs,
+  dotted-eighth delays. About 80% of the sequencer patches run at 1/8 notes through the arpeggiator.
 - Signal chain: synth -> drive -> phaser -> delay -> reverb -> compressor -> limiter -> soft clip.
 
 ## Build (needs Docker, e.g. Docker Desktop on the iMac)

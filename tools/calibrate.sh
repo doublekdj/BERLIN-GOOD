@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 python3 tools/gen_presets.py
-for i in 1 2 3 4 5 6; do
+for i in 1 2 3 4 5; do
   g++ -O1 -std=gnu++14 -Isrc/dsp -x c++ tools/calibrate.cpp -x c src/dsp/moog_engine.c -o /tmp/bm_cal 2>/dev/null || \
   { g++ -O1 -std=gnu++14 -Isrc/dsp -c -x c++ tools/calibrate.cpp -o /tmp/bm_cal1.o && gcc -O1 -Isrc/dsp -c src/dsp/moog_engine.c -o /tmp/bm_cal2.o && g++ /tmp/bm_cal1.o /tmp/bm_cal2.o -o /tmp/bm_cal; }
   /tmp/bm_cal 0.17 > /tmp/bm_trim.h
