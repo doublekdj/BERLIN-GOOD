@@ -1,8 +1,8 @@
 {
- "name": "Berlin Mood",
+ "name": "BERLIN K-MOOD",
  "vendor": "KK",
- "uid": "BrlG",
- "so": "berlingood.so",
+ "uid": "BKM1",
+ "so": "berlinkmood.so",
  "module": "src/module.json",
  "params": "params.json",
  "build": {
