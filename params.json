@@ -572,14 +572,14 @@
     "CHORD",
     "PULSE",
     "OCTAVES",
-    "FIFTHS",
+    "BOUNCE",
     "PHAEDRA",
     "RUBYCON",
     "STRATOS",
     "TANGRAM",
     "CYCLONE",
-    "MINOR CLIMB",
-    "DORIAN",
+    "CLIMB",
+    "WAVE",
     "OPTIC",
     "GAPPED",
     "SYNCOPATED",
@@ -637,6 +637,14 @@
    "name": "MACRO PHASE",
    "min": 0.0,
    "max": 1.0
+  },
+  {
+   "key": "legato",
+   "name": "LEGATO",
+   "options": [
+    "OFF",
+    "ON"
+   ]
   }
  ]
 }

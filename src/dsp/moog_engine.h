@@ -121,6 +121,7 @@ typedef struct {
 
     /* Internal state - key tracking */
     int current_note;             /* Currently playing MIDI note */
+    int legato_mode;              /* 0: every note retriggers the envelopes (default), 1: legato (no retrigger while a key is held) */
     int gate_on;                  /* Gate state */
 
     /* Key list (simple array for note priority) */

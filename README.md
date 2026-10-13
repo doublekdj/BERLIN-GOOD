@@ -13,10 +13,12 @@ Tangerine Dream / Berlin School sounds from the MPC itself.
 - **Drive**: saturator / overdrive / distortion, with TONE and MIX. **Compressor** (threshold, ratio, attack, release,
   make-up) and a lookahead **limiter** (ceiling, release) on the output.
 - **Reverb types**: PLATE, ROOM, HALL (the shimmer works on all three). Every effect has its own ON/OFF button.
-- **Arpeggiator**: 16 patterns (CHORD = your notes, plus 15 fixed Berlin-style sequences), direction UP / DOWN / UP-DOWN /
+- **Arpeggiator**: 16 patterns (CHORD = your notes in order, plus 15 fixed Berlin-style sequences that follow the chord you play: 3, 4, 5, 7 notes...), direction UP / DOWN / UP-DOWN /
   RANDOM, rate 1/4 .. 1/32, gate, 1-3 octaves, HOLD. Tempo from the MPC (or the manual BPM of the delay).
 - **4 macros** on the MAIN page (one Q-Link column): OPEN (filter cutoff), SPACE (reverb), ECHO (delay), PHASE (phaser).
   They add to the patch values, so they never overwrite a patch.
+- Mod wheel: opens the filter (WHEEL FILTER) and adds vibrato (WHEEL PITCH). LEGATO switch: off = every note retriggers the envelopes.
+- Every patch has its own level trim (tools/calibrate.sh), so all 274 programs play at a similar volume.
 - Pages: MAIN, OSCILLATORS, MODULATION, **FX MOD** (phaser, delay, reverb), **FX DYN** (drive, compressor, limiter), **ARP**.
   80 parameters, all on Q-Links and automatable.
 - **274 programs**: the 14 RaffoSynth ones (effects off), 4 hand-made Berlin patches and a bank of 256 Berlin School

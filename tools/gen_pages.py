@@ -94,7 +94,7 @@ tabs += L
 # ---------------- ARP ----------------
 s = svg_open() + panel(38, 360, "ARPEGGIATOR", "FIXED SEQUENCES · 4 DIRECTIONS")
 s += label(118, 330, "DIRECTION") + label(318, 454, "OCTAVES")
-s += panel(418, 580, "PATTERN // BERLIN SEQUENCES", "CHORD = YOUR NOTES · OTHERS RUN FROM THE LOWEST KEY")
+s += panel(418, 580, "PATTERN // BERLIN SEQUENCES", "1 NOTE: SEQUENCE · SEVERAL NOTES: SEQUENCE ON YOUR CHORD")
 s += panel(1018, 230, "TIMING", "TEMPO: HOST OR FX MOD")
 s += label(1133, 206, "RATE")
 s += banner("DEVELOPED BY ANGELO RAGGI (KK)")

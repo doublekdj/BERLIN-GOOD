@@ -1,8 +1,8 @@
 /*
  * Berlin Mood - arpeggiator / sequencer (original code for this project, MIT, see LICENSE).
  *
- * Plays the notes you hold as an arpeggio (CHORD) or runs a fixed Berlin School sequence from the lowest held
- * note. Direction: UP, DOWN, UP/DOWN, RANDOM. Rate and gate are set per patch; tempo comes from the host
+ * Plays the notes you hold as an arpeggio (CHORD) or runs a fixed Berlin School sequence over the chord you hold
+ * (3, 4, 5 or more notes; a single note works too). Direction: UP, DOWN, UP/DOWN, RANDOM. Rate and gate are set per patch; tempo comes from the host
  * (or the manual BPM). HOLD latches the notes so the sequence keeps running with your hands off.
  *
  * Usage (one instance per plugin instance): feed note on/off to arp_note_on/arp_note_off, then once per audio
@@ -33,25 +33,34 @@ typedef struct {
 
 typedef struct { int at; int on; int note; int vel; } arp_event_t;
 
-/* index 0 is CHORD (no table); 1.. are fixed sequences, offsets in semitones from the lowest held note */
+/* Index 0 is CHORD (the notes you hold, in order). 1.. are fixed sequences written as positions in the CHORD you
+ * hold: step j plays the j-th held note, counting on upwards through the octaves when j is bigger than the number
+ * of notes (so a 5-note chord and j=6 is the 2nd note an octave higher). j = ARP_TOP is the highest held note.
+ * A chord of fewer than 3 notes is completed with its octave / fifth, so single notes still make a full pattern.
+ * o = extra octaves added to the step. */
 #define ARP_PATTERNS 16
-static const signed char ARP_SEQ[ARP_PATTERNS][16] = {
-    {0},
-    {0, 0, 0, 0, 0, 0, 0, 0},                                    /* 1  PULSE */
-    {0, 12, 0, 12, 0, 12, 0, 12},                                /* 2  OCTAVES */
-    {0, 7, 0, 7, 12, 7, 0, 7},                                   /* 3  FIFTHS */
-    {0, 7, 12, 15, 19, 15, 12, 7},                               /* 4  PHAEDRA */
-    {0, 3, 7, 12, 7, 3, 0, 7},                                   /* 5  RUBYCON */
-    {0, 7, 10, 12, 10, 7, 5, 7},                                 /* 6  STRATOS */
-    {0, 0, 12, 0, 7, 0, 10, 0},                                  /* 7  TANGRAM */
-    {0, 12, 7, 12, 0, 12, 3, 12},                                /* 8  CYCLONE */
-    {0, 3, 7, 10, 12, 15, 19, 22},                               /* 9  MINOR CLIMB */
-    {0, 2, 3, 5, 7, 9, 10, 12},                                  /* 10 DORIAN */
-    {0, 7, 3, 10, 7, 12, 10, 15},                                /* 11 OPTIC */
-    {0, ARP_REST, 7, ARP_REST, 12, ARP_REST, 7, ARP_REST},       /* 12 GAPPED */
-    {0, ARP_REST, 0, 7, ARP_REST, 12, ARP_REST, 7},              /* 13 SYNCOPATED */
-    {0, 0, 7, 0, 12, 0, 7, 0, 3, 3, 10, 3, 15, 3, 10, 3},        /* 14 16 STEP */
-    {24, 19, 15, 12, 7, 3, 0, -5},                               /* 15 DESCENT */
+#define ARP_TOP 100
+typedef struct { signed char j, o; } arp_step_t;
+#define R_ {ARP_REST, 0}
+#define S_(j) {j, 0}
+#define SO_(j, o) {j, o}
+static const arp_step_t ARP_SEQ[ARP_PATTERNS][16] = {
+    {S_(0)},
+    /* 1  PULSE      */ {S_(0), S_(0), S_(0), S_(ARP_TOP), S_(0), S_(0), S_(0), S_(ARP_TOP)},
+    /* 2  OCTAVES    */ {S_(0), SO_(0, 1), S_(0), SO_(0, 1), S_(1), SO_(1, 1), S_(0), SO_(0, 1)},
+    /* 3  BOUNCE     */ {S_(0), S_(ARP_TOP), S_(0), S_(ARP_TOP), S_(1), S_(ARP_TOP), S_(0), S_(ARP_TOP)},
+    /* 4  PHAEDRA    */ {S_(0), S_(1), S_(2), S_(3), S_(4), S_(3), S_(2), S_(1)},
+    /* 5  RUBYCON    */ {S_(0), S_(2), S_(1), S_(3), S_(2), S_(4), S_(3), S_(1)},
+    /* 6  STRATOS    */ {S_(0), S_(2), S_(4), S_(2), S_(1), S_(3), S_(5), S_(3)},
+    /* 7  TANGRAM    */ {S_(0), S_(1), S_(0), S_(2), S_(0), S_(3), S_(0), S_(2)},
+    /* 8  CYCLONE    */ {S_(0), S_(ARP_TOP), S_(1), S_(ARP_TOP), S_(2), S_(ARP_TOP), S_(1), S_(ARP_TOP)},
+    /* 9  CLIMB      */ {S_(0), S_(1), S_(2), S_(3), S_(4), S_(5), S_(6), S_(7)},
+    /* 10 WAVE       */ {S_(0), S_(2), S_(1), S_(3), S_(2), S_(4), S_(3), S_(5)},
+    /* 11 OPTIC      */ {S_(0), S_(3), S_(1), S_(4), S_(2), S_(5), S_(3), S_(6)},
+    /* 12 GAPPED     */ {S_(0), R_, S_(1), R_, S_(2), R_, S_(1), R_},
+    /* 13 SYNCOPATED */ {S_(0), R_, S_(0), S_(1), R_, S_(2), R_, S_(1)},
+    /* 14 16 STEP    */ {S_(0), S_(0), S_(1), S_(0), S_(2), S_(0), S_(1), S_(0), S_(0), S_(0), S_(2), S_(0), S_(3), S_(0), S_(2), S_(0)},
+    /* 15 DESCENT    */ {S_(7), S_(6), S_(5), S_(4), S_(3), S_(2), S_(1), S_(0)},
 };
 static const int ARP_SEQ_LEN[ARP_PATTERNS] = {0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 16, 8};
 
@@ -68,21 +77,39 @@ static uint32_t arp_rand(arp_t *a) {
     return a->rng = x;
 }
 
+static int arp_octs(const arp_t *a) { return a->oct < 0 ? 0 : (a->oct > 2 ? 2 : a->oct); }
+
 static int arp_seq_len(const arp_t *a) {
     if (a->nheld == 0) return 0;
-    if (a->pat > 0 && a->pat < ARP_PATTERNS) return ARP_SEQ_LEN[a->pat];
-    int o = a->oct < 0 ? 0 : (a->oct > 2 ? 2 : a->oct);
+    int o = arp_octs(a);
+    if (a->pat > 0 && a->pat < ARP_PATTERNS) return ARP_SEQ_LEN[a->pat] * (o + 1);   /* the sequence repeated an octave higher */
     return a->nheld * (o + 1);
+}
+
+/* the chord a sequence works on: at least 3 notes (a single note gets its fifth and octave) */
+static int arp_chord(const arp_t *a, int *c) {
+    int n = a->nheld;
+    for (int i = 0; i < n; i++) c[i] = a->held[i];
+    if (n == 1) { c[1] = c[0] + 7; c[2] = c[0] + 12; n = 3; }
+    else if (n == 2) { c[2] = c[0] + 12; n = 3; }
+    return n;
 }
 
 /* note at sequence position i, or ARP_REST */
 static int arp_seq_note(const arp_t *a, int i, int *vel) {
     if (a->pat > 0 && a->pat < ARP_PATTERNS) {
-        int off = ARP_SEQ[a->pat][i];
+        int len = ARP_SEQ_LEN[a->pat];
+        arp_step_t st = ARP_SEQ[a->pat][i % len];
+        int octs = i / len;
         *vel = a->held_vel[0];
-        if (off == ARP_REST) return ARP_REST;
-        int n = a->held[0] + off;
-        return n < 0 ? 0 : (n > 127 ? 127 : n);
+        if (st.j == ARP_REST) return ARP_REST;
+        int c[ARP_MAX_HELD + 2];
+        int n = arp_chord(a, c);
+        int note;
+        if (st.j == ARP_TOP) note = c[n - 1];
+        else note = c[st.j % n] + 12 * (st.j / n);
+        note += 12 * (st.o + octs);
+        return note < 0 ? 0 : (note > 127 ? 127 : note);
     }
     int k = i % a->nheld, o = i / a->nheld;
     *vel = a->held_vel[k];

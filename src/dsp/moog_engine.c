@@ -321,7 +321,7 @@ void moog_engine_note_on(moog_engine_t *engine, int note, float velocity) {
     engine->current_note = note;
     engine->velocity = velocity;
 
-    if (engine->gate_on) {
+    if (engine->gate_on && engine->legato_mode) {
         /* Legato: gate already on, just change pitch - don't retrigger envelopes */
     } else {
         /* New note: trigger envelopes from current level (smooth retrigger) */
@@ -435,7 +435,8 @@ void moog_engine_render(moog_engine_t *engine, float *output, int frames) {
         float lfo_val = sinf(engine->lfo_phase * 2.0f * (float)M_PI);
 
         /* Apply mod wheel modulation to LFO depths */
-        float pitch_mod = lfo_val * engine->lfo_depth_pitch * engine->mod_to_pitch * engine->mod_wheel;
+        /* mod wheel: vibrato (LFO), its depth set by Mod>Pitch; LFO>Pitch adds to it */
+        float pitch_mod = lfo_val * engine->mod_wheel * engine->mod_to_pitch * (0.2f + 0.8f * engine->lfo_depth_pitch);
 
         /* Pitch modulation */
         if (fabsf(pitch_mod) > 0.0001f) {
@@ -519,7 +520,10 @@ void moog_engine_render(moog_engine_t *engine, float *output, int frames) {
             /* LFO filter modulation (lfo_val already computed above) */
             float lfo_filt = lfo_val * engine->lfo_depth_filter * engine->mod_to_filter * 0.3f;
 
-            float cutoff_normalized = clampf(base_cutoff + filt_env_mod + key_track + lfo_filt, 0.0f, 1.0f);
+            /* mod wheel opens the filter (amount: Mod>Filter) */
+            float wheel_filt = engine->mod_wheel * engine->mod_to_filter * 0.5f;
+
+            float cutoff_normalized = clampf(base_cutoff + filt_env_mod + key_track + lfo_filt + wheel_filt, 0.0f, 1.0f);
 
             /* Map normalized cutoff to Hz (exponential: 20Hz to 20kHz) */
             float cutoff_hz = 20.0f * powf(1000.0f, cutoff_normalized);

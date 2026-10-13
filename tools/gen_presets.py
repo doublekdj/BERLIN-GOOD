@@ -28,7 +28,7 @@ DEFAULT = dict(
     osc3_wave=1, osc3_volume=0.0, osc3_range=-1, osc3_detune=0.5, osc4_wave=0, osc4_volume=0.0, osc4_range=0,
     osc4_detune=0.5, noise=0.0, cutoff=0.6, resonance=0.2, contour=0.3, key_follow=0.0,
     attack=0.01, decay=0.3, sustain=0.7, release=0.2, f_attack=0.01, f_decay=0.3, f_sustain=0.3, f_release=0.2,
-    glide=0.0, volume=0.7, lfo_rate=0.3, lfo_pitch=0.0, lfo_filter=0.0, mod_filter=0.5, mod_pitch=0.5,
+    glide=0.0, volume=0.7, lfo_rate=0.3, lfo_pitch=0.0, lfo_filter=0.0, mod_filter=0.7, mod_pitch=0.3,
     bend_range=0.167, vel_sens=0.5,
     ph_rate=0.25, ph_depth=0.6, ph_fb=0.4, ph_mix=0.5, dl_div=0, dl_fb=0.4, dl_mix=0.3, dl_tone=0.6,
     dl_sync=0, dl_bpm=0.5, sh_decay=0.5, sh_shimmer=0.0, sh_mix=0.0, sh_damp=0.5,
@@ -173,6 +173,72 @@ def clamp(k, v):
     return int(round(v)) if k in INT_KEYS else round(v, 3)
 
 
+BRIGHT = {"Phaedra Seq": 0.2, "Rubycon Pad": 0.22, "Ricochet Lead": 0.2, "Stratos Lead": 0.2, "Stratosfear Lead": 0.2,
+          "Tangram Bass": 0.12, "Cyclone Seq": 0.2, "Force Choir": 0.22, "Hyper Drone": 0.2, "White Bell": 0.1,
+          "Sorcerer Mist": 0.2, "Logos Pulse": 0.18, "Thief Bass": 0.12, "Exit Strings": 0.24, "Optic Arp": 0.2,
+          "Poland Brass": 0.18, "Le Parc Flute": 0.14}
+PLUCKS = {"Phaedra Seq", "Tangram Bass", "Cyclone Seq", "Logos Pulse", "Thief Bass", "Optic Arp", "White Bell"}
+PADS = {"Rubycon Pad", "Force Choir", "Exit Strings", "Hyper Drone", "Sorcerer Mist"}
+BASSES = {"Tangram Bass", "Thief Bass"}
+LEADS = {"Ricochet Lead", "Stratos Lead", "Stratosfear Lead", "Le Parc Flute", "Poland Brass", "Optic Arp"}
+
+
+def brighten(name, p):
+    """The filter must stay open while a note is held: higher cutoff, and for leads the filter envelope
+    settles high (small contour, high sustain) so the sound does not close down."""
+    p["cutoff"] = min(0.95, p["cutoff"] + BRIGHT.get(name, 0.12))
+    if name in LEADS:
+        p["f_sustain"] = max(p["f_sustain"], 0.65)
+        p["contour"] = min(p["contour"], 0.3)
+    else:
+        p["f_sustain"] = max(p["f_sustain"], 0.35)
+    if name in PLUCKS:   # plucks and sequence sounds: longer body, filter that stays open and a real release
+        p["decay"] = max(p["decay"], 0.4)
+        p["sustain"] = max(p["sustain"], 0.3)
+        p["release"] = max(p["release"], 0.32)
+        p["f_decay"] = max(p["f_decay"], 0.42)
+        p["f_sustain"] = max(p["f_sustain"], 0.5)
+        p["f_release"] = max(p["f_release"], 0.32)
+    if name in PADS:
+        p["f_sustain"] = max(p["f_sustain"], 0.55)
+        p["contour"] = min(p["contour"], 0.3)
+    p["arp_hold"] = 0
+
+
+# effect profiles: 16 steps, each family walks through them in a different order, so every family has dry,
+# medium and very wet patches, with and without phaser / drive / delay
+RV_MIX = [0.0, 0.3, 0.5, 0.7, 0.35, 0.6, 0.0, 0.45, 0.8, 0.25, 0.55, 0.4, 0.65, 0.3, 0.5, 0.75]
+DL_MIX = [0.0, 0.25, 0.4, 0.55, 0.0, 0.35, 0.5, 0.3, 0.6, 0.0, 0.45, 0.35, 0.5, 0.25, 0.0, 0.4]
+PH_MIX = [0.0, 0.6, 0.8, 0.0, 0.7, 0.9, 0.5, 0.0, 0.75, 0.65, 0.0, 0.85, 0.55, 0.7, 0.0, 0.8]
+DR_AMT = [0.0, 0.0, 0.4, 0.0, 0.0, 0.55, 0.0, 0.3, 0.0, 0.0, 0.7, 0.0, 0.45, 0.0, 0.0, 0.6]
+
+
+# oscillator recipes: (wave1, wave2, wave3, octave offset of osc2, of osc3, detune2, detune3); wave 0 triangle, 1 saw,
+# 2 square, 3 pulse. A None wave switches that oscillator off.
+RECIPES = [(1, 1, None, 0, 0, 0.54, 0.5), (2, 1, 2, 0, -1, 0.5, 0.5), (1, 2, None, 1, 0, 0.5, 0.5),
+           (3, 1, 1, 0, -1, 0.47, 0.53), (2, 2, 1, 0, 1, 0.52, 0.5), (1, 0, 2, -1, -1, 0.5, 0.5),
+           (0, 1, None, 0, 0, 0.5, 0.5), (2, None, None, 0, 0, 0.5, 0.5), (1, None, None, 0, 0, 0.5, 0.5),
+           (1, 1, 1, 0, -1, 0.45, 0.55), (2, 3, None, 1, 0, 0.5, 0.5), (3, 2, None, 0, 0, 0.53, 0.5),
+           (1, 2, 2, -1, 0, 0.5, 0.5), (2, 1, None, 1, 0, 0.56, 0.5), (3, None, None, 0, 0, 0.5, 0.5),
+           (1, 3, 0, 0, -1, 0.49, 0.5)]
+SHIFT = [0, 0, 1, 0, -1, 0, 1, 0, 0, -1, 1, 0, 0, 1, -1, 0]
+
+
+def apply_recipe(fi, vi, name, p):
+    w1, w2, w3, o2, o3, d2, d3 = RECIPES[(vi * 5 + fi * 3) % 16]
+    lo, hi = (-2, -1) if name in BASSES else ((-1, 1) if name in LEADS else (-2, 1))
+    r1 = max(lo, min(hi, p["osc1_range"] + SHIFT[(vi * 3 + fi) % 16]))
+    p["osc1_wave"], p["osc1_range"] = w1, r1
+    for n_, w, o, d, v in ((2, w2, o2, d2, 0.55), (3, w3, o3, d3, 0.4)):
+        if w is None:
+            p["osc%d_volume" % n_] = 0.0
+            continue
+        p["osc%d_wave" % n_] = w
+        p["osc%d_range" % n_] = max(-2, min(2, r1 + o))
+        p["osc%d_detune" % n_] = d
+        p["osc%d_volume" % n_] = max(p["osc%d_volume" % n_], v)
+
+
 def variant(fi, vi, name, base, arp):
     r = random.Random(1000 * (fi + 1) + vi)
     p = dict(base)
@@ -181,8 +247,8 @@ def variant(fi, vi, name, base, arp):
         p[k] = max(lo, min(hi, p[k] + r.uniform(-amt, amt)))
 
     # tone and envelopes
-    p["cutoff"] = max(0.22, min(0.92, p["cutoff"] + ((vi % 5) - 2) * 0.035 + r.uniform(-0.03, 0.03)))
-    jit("resonance", 0.1, 0.05, 0.75)
+    p["cutoff"] = max(0.22, min(0.92, p["cutoff"] + ((vi % 5) - 2) * 0.03 + r.uniform(-0.03, 0.03)))
+    jit("resonance", 0.1, 0.05, 0.7)
     jit("contour", 0.12)
     for k in ("decay", "release", "f_decay", "f_release"):
         p[k] = max(0.0, min(1.0, p[k] * r.uniform(0.75, 1.3)))
@@ -191,42 +257,45 @@ def variant(fi, vi, name, base, arp):
     for k in ("osc2_detune", "osc3_detune"):
         if p[k.replace("detune", "volume")] > 0:
             jit(k, 0.035, 0.38, 0.62)
-    if vi % 8 == 7 and p["osc1_range"] < 1:
-        p["osc1_range"] += 1       # an octave up
-    if vi % 7 == 3:
-        p["osc3_wave"] = 3 if p["osc3_volume"] > 0 else p["osc3_wave"]
+    apply_recipe(fi, vi, name, p)
     if vi % 6 == 1 and p["lfo_filter"] < 0.05:
-        p["lfo_filter"] = 0.15
+        p["lfo_filter"] = 0.12
         p["lfo_rate"] = 0.12 + 0.05 * (vi % 4)
+    brighten(name, p)
+
     # effects
-    if p["ph_on"]:
-        p["ph_rate"] = max(0.03, min(0.9, p["ph_rate"] * r.uniform(0.6, 1.6)))
-        jit("ph_depth", 0.15, 0.3, 0.95)
-        jit("ph_fb", 0.15, 0.1, 0.8)
-        jit("ph_mix", 0.15, 0.2, 0.9)
-    if vi % 5 == 4:
-        p["ph_on"] = 1 - p["ph_on"] if fi % 2 else p["ph_on"]
-    if p["dl_on"]:
-        p["dl_div"] = [0, 0, 1, 2, 4, 0, 3, 1][(vi + fi) % 8]
-        jit("dl_fb", 0.12, 0.2, 0.7)
-        jit("dl_mix", 0.12, 0.12, 0.6)
-        jit("dl_tone", 0.2, 0.3, 0.85)
-    if p["rv_on"]:
-        if vi % 4 == 3:
-            p["rv_type"] = (p["rv_type"] + 1) % 3
-        jit("sh_decay", 0.18, 0.15, 0.95)
-        jit("sh_mix", 0.1, 0.08, 0.7)
-        jit("sh_shimmer", 0.2, 0.0, 0.8)
-        jit("sh_damp", 0.2, 0.2, 0.8)
-    if vi % 6 == 5 and not p["dr_on"]:
-        p["dr_on"] = 1
-        p["dr_type"] = vi % 3
-        p["dr_drive"] = 0.25 + 0.05 * (vi % 4)
-        p["dr_mix"] = 0.35
-        p["lm_on"] = 1
-    if p["dr_on"]:
-        jit("dr_drive", 0.1, 0.15, 0.8)
-        jit("dr_tone", 0.2, 0.3, 0.8)
+    k = (vi + fi * 5) % 16
+    rv = RV_MIX[k]
+    p["rv_on"] = 1 if rv > 0 else 0
+    p["sh_mix"] = rv
+    p["rv_type"] = (fi + vi) % 3
+    p["sh_decay"] = max(0.15, min(0.95, 0.3 + 0.045 * ((vi * 7 + fi) % 16)))
+    p["sh_shimmer"] = [0.0, 0.0, 0.25, 0.45, 0.0, 0.6, 0.15, 0.0][(vi + fi) % 8]
+    p["sh_damp"] = 0.3 + 0.04 * ((vi * 3 + fi) % 10)
+    k = (vi * 3 + fi) % 16
+    dm = DL_MIX[k]
+    p["dl_on"] = 1 if dm > 0 else 0
+    p["dl_mix"] = dm
+    p["dl_div"] = [0, 0, 1, 2, 4, 0, 3, 1][(vi + fi) % 8]
+    p["dl_fb"] = 0.3 + 0.05 * ((vi + fi) % 6)
+    p["dl_tone"] = 0.4 + 0.05 * ((vi * 2 + fi) % 8)
+    k = (vi * 7 + fi * 3) % 16
+    pm = PH_MIX[k]
+    p["ph_on"] = 1 if pm > 0 else 0
+    p["ph_mix"] = pm
+    p["ph_rate"] = 0.08 + 0.05 * ((vi * 5 + fi) % 9)
+    p["ph_depth"] = 0.5 + 0.05 * ((vi + fi * 2) % 9)
+    p["ph_fb"] = 0.3 + 0.05 * ((vi * 3 + fi) % 8)
+    k = (vi * 5 + fi * 7) % 16
+    da = DR_AMT[k]
+    p["dr_on"] = 1 if da > 0 else 0
+    p["dr_type"] = (vi + fi) % 3
+    p["dr_drive"] = da
+    p["dr_mix"] = 0.5 + 0.05 * (vi % 7)
+    p["dr_tone"] = 0.45 + 0.04 * (vi % 8)
+    if vi in (0, 9):   # fully dry reference patches
+        for key in ("rv_on", "dl_on", "ph_on", "dr_on"):
+            p[key] = 0
     if vi % 9 == 8:
         p["cp_on"] = 1
         p["cp_makeup"] = 0.25
@@ -244,12 +313,17 @@ def variant(fi, vi, name, base, arp):
             p["arp_dir"] = 3  # random every now and then
     else:
         p["arp_on"] = 0
+    p["arp_hold"] = 0
     p["lm_on"] = 1
     return ("%s %s" % (name, TAGS[vi]), p)
 
 
 def build():
-    out = [(n, p) for n, p in HAND]
+    out = []
+    for n, p in HAND:
+        p = dict(p)
+        brighten(n, p)
+        out.append((n, p))
     for fi, (name, base, arp) in enumerate(FAMILIES):
         for vi in range(16):
             out.append(variant(fi, vi, name, base, arp))

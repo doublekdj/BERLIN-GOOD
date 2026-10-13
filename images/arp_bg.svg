@@ -13,7 +13,7 @@
 <text x="318" y="368" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="11" font-weight="700" letter-spacing="2" fill="#e0782a">OCTAVES</text>
 <rect x="418" y="52" width="580" height="448" rx="6" fill="#131313" stroke="#3c3c3c" stroke-width="1.5"/>
 <text x="432" y="73" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="12" font-weight="700" letter-spacing="2.2" fill="#e0782a">PATTERN // BERLIN SEQUENCES</text>
-<text x="708" y="98" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="11" letter-spacing="1.6" fill="#85827a">CHORD = YOUR NOTES · OTHERS RUN FROM THE LOWEST KEY</text>
+<text x="708" y="98" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="11" letter-spacing="1.6" fill="#85827a">1 NOTE: SEQUENCE · SEVERAL NOTES: SEQUENCE ON YOUR CHORD</text>
 <rect x="1018" y="52" width="230" height="448" rx="6" fill="#131313" stroke="#3c3c3c" stroke-width="1.5"/>
 <text x="1032" y="73" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="12" font-weight="700" letter-spacing="2.2" fill="#e0782a">TIMING</text>
 <text x="1133" y="98" text-anchor="middle" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="11" letter-spacing="1.6" fill="#85827a">TEMPO: HOST OR FX MOD</text>

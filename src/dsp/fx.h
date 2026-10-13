@@ -206,7 +206,10 @@ static void fx_update_ctrl(fx_t *f) {
         f->rv_damp = 1.0f - expf(-2.0f * FX_PI * dc / FX_SR);
         f->rv_apg = apg;
         /* loop gain must stay under the reverb's own sustain: the stable limit falls roughly as 1/T60 */
-        f->rv_shim = p->sh_shimmer * 0.55f / t60;
+        {   /* shimmer loop gain: shorter rooms feed back faster, so plate and room get a smaller share (tested to decay) */
+            static const float kshim[3] = {0.16f, 0.05f, 0.55f};
+            f->rv_shim = p->sh_shimmer * kshim[ty] / t60;
+        }
         FX_SM(f->rv_mixv, p->sh_mix);
         if (f->rv.last_type != ty) {   /* different room: start from silence, no click from re-tapped lines */
             memset(f->rv.line, 0, sizeof(f->rv.line));
