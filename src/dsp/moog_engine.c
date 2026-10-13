@@ -435,7 +435,10 @@ void moog_engine_render(moog_engine_t *engine, float *output, int frames) {
         float lfo_val = sinf(engine->lfo_phase * 2.0f * (float)M_PI);
 
         /* Apply mod wheel modulation to LFO depths */
-        float pitch_mod = lfo_val * engine->lfo_depth_pitch * engine->mod_to_pitch * engine->mod_wheel;
+        /* Keep wheel-controlled vibrato subtle: the old 2-semitone LFO
+         * excursion often sounded like an alien pitch sweep. The dedicated
+         * WHEEL PITCH control still works, but now spans at most about 0.3 st. */
+        float pitch_mod = lfo_val * engine->lfo_depth_pitch * engine->mod_to_pitch * engine->mod_wheel * 0.15f;
 
         /* Pitch modulation */
         if (fabsf(pitch_mod) > 0.0001f) {
