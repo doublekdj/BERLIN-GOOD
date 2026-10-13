@@ -291,7 +291,10 @@ def variant(fi, vi, name, base, arp):
             continue
         p[key + "wave"] = waves[k]
         p[key + "range"] = max(-2, min(2, r1 + offs[k]))
-        p[key + "detune"] = dets[k]
+        d = dets[k] + r.uniform(-0.014, 0.014)                       # analog oscillators never sit exactly in tune
+        if r.random() < 0.3:
+            d += pick(r, [-1, 1]) * r.uniform(0.03, 0.07)             # clearly detuned (fat) patches
+        p[key + "detune"] = max(0.36, min(0.64, d))
         p[key + "volume"] = r.uniform(0.3, 0.75) if k < 3 else r.uniform(0.25, 0.55)
     p["noise"] = r.uniform(0.03, 0.1) if r.random() < 0.1 else 0.0
 
@@ -313,6 +316,27 @@ def variant(fi, vi, name, base, arp):
     p["mod_filter"] = r.uniform(0.75, 1.0)    # mod wheel -> cutoff
     p["mod_pitch"] = 0.0                      # no pitch movement from the wheel
     brighten(name, p)
+    # brightness: a spread from warm to bright instead of everything open; VCF envelope varied per patch
+    cls = (n * 7 + fi) % 10
+    if cls < 3:      # warm
+        cut = r.uniform(0.34, 0.5); p["contour"] = min(p["contour"], 0.35)
+    elif cls < 7:    # medium
+        cut = r.uniform(0.5, 0.64); p["contour"] = min(p["contour"], 0.5)
+    else:            # bright
+        cut = r.uniform(0.64, 0.78); p["contour"] = min(p["contour"], 0.4)
+    cut += {"bass": -0.08, "pad": 0.02, "lead": 0.03}.get(role, 0.0)
+    hi_r = max([p["osc1_range"]] + [p["osc%d_range" % k] for k in (2, 3, 4) if p["osc%d_volume" % k] > 0])
+    lo_r = min([p["osc1_range"]] + [p["osc%d_range" % k] for k in (2, 3, 4) if p["osc%d_volume" % k] > 0])
+    floor = 0.4 + 0.065 * (lo_r + 2) if role != "bass" else 0.28   # the filter must stay above the notes
+    p["cutoff"] = max(0.28, floor, min(0.85, cut))
+    p["f_decay"] = r.uniform(0.15, 0.8)
+    p["f_sustain"] = r.uniform(0.1, 0.9)
+    p["f_release"] = r.uniform(0.1, 0.8)
+    if role in ("pluck",):
+        p["f_sustain"] = max(p["f_sustain"], 0.3); p["f_release"] = max(p["f_release"], 0.3)
+    if role == "lead":
+        p["f_sustain"] = max(p["f_sustain"], 0.45)   # the filter must not close on a held lead
+    p["f_attack"] = r.uniform(0.0, 0.35) if role in ("pad", "other") and r.random() < 0.5 else p["f_attack"]
 
     # ---- effects ----
     dry_ref = (n % 64 == 0)
@@ -343,7 +367,7 @@ def variant(fi, vi, name, base, arp):
     p["dl_tone"] = r.uniform(0.4, 0.75)
     p["dl_sync"] = 0
     # phaser in 30% of the bank
-    p["ph_on"] = 1 if (n % 10) in (1, 4, 8) else 0
+    p["ph_on"] = 1 if (n % 5) in (1, 3) else 0
     p["ph_mix"] = r.uniform(0.5, 0.9)
     p["ph_rate"] = r.uniform(0.08, 0.5)
     p["ph_depth"] = r.uniform(0.5, 0.95)

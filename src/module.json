@@ -2,7 +2,7 @@
   "id": "berlingood",
   "name": "Berlin Mood",
   "abbrev": "BG",
-  "version": "1.3.0",
+  "version": "1.5.0",
   "description": "Berlin Mood: Minimoog-style mono synth (RaffoSynth engine) with Berlin School effects, arpeggiator and 526 programs",
   "author": "Angelo Raggi (KK); synth engine: Nicolas Roulet, Julian Palladino (RaffoSynth, MIT)",
   "license": "MIT",
