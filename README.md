@@ -1,6 +1,6 @@
-# Berlin Mood
+# BERLIN K-MOOD
 
-Minimoog-style mono synth + effects, arpeggiator and 274 programs for the **Akai MPC (Gen 1, HAKAI / MPC OS standalone)**, built to get
+Minimoog-style mono synth + effects, arpeggiator and 274 programs (512-bank expansion in progress) for the **Akai MPC (Gen 1, HAKAI / MPC OS standalone)**, built to get
 Tangerine Dream / Berlin School sounds from the MPC itself.
 
 - **Voice**: RaffoSynth (4 oscillators, Moog ladder filter, contour envelopes, LFO, glide) — mono, low CPU.
@@ -31,7 +31,7 @@ Tangerine Dream / Berlin School sounds from the MPC itself.
 
 It clones the MPC plugin framework, copies this folder in, runs the offline test (`tools/test_port.sh`) and builds the
 ARM `.so` + skin with `tools/build_port.sh` (glibc 2.31 toolchain, runs on the MPC).
-Output: `framework/berlin-good/build/` (`berlingood.so`, `skin/KK - VST - Berlin Mood/`, `pluginlist-entry.xml`).
+Output: `framework/berlin-good/build/` (`berlingood.so`, `skin/KK - VST - BERLIN K-MOOD/`, `pluginlist-entry.xml`).
 Then install like your other plugins (the framework's `release.py` / install.sh, or copy the folder to
 `/sdcard/Synths/KK - VST - Berlin Mood/` and register `pluginlist-entry.xml`).
 
