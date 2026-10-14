@@ -1,5 +1,5 @@
 /*
- * RaffoSynth UI for Move Anything
+ * BERLIN K-MOOD UI for Move Anything
  *
  * Uses shared sound generator UI base for consistent preset browsing.
  * Parameter editing via shadow UI hierarchy when in chain context.
@@ -15,11 +15,11 @@ const ui = createSoundGeneratorUI({
     moduleName: 'BERLIN K-MOOD',
 
     onInit: (state) => {
-        /* Any RaffoSynth specific initialization */
+        /* BERLIN K-MOOD initialization */
     },
 
     onTick: (state) => {
-        /* Any RaffoSynth specific per-tick updates */
+        /* BERLIN K-MOOD per-tick updates */
     },
 
     onPresetChange: (preset) => {
