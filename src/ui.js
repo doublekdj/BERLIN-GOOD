@@ -10,9 +10,9 @@
 /* Shared utilities - absolute path for module location independence */
 import { createSoundGeneratorUI } from '/data/UserData/schwung/shared/sound_generator_ui.mjs';
 
-/* Create the UI with RaffoSynth-specific customizations */
+/* Create the UI with BERLIN K-MOOD-specific customizations */
 const ui = createSoundGeneratorUI({
-    moduleName: 'RaffoSynth',
+    moduleName: 'BERLIN K-MOOD',
 
     onInit: (state) => {
         /* Any RaffoSynth specific initialization */
@@ -27,7 +27,7 @@ const ui = createSoundGeneratorUI({
         host_module_set_param('all_notes_off', '1');
     },
 
-    showPolyphony: false,  /* RaffoSynth is monophonic */
+    showPolyphony: false,  /* BERLIN K-MOOD is monophonic */
     showOctave: true,
 });
 
