@@ -1,6 +1,11 @@
 name: Release (draft)
 
 on:
+  push:
+    branches:
+      - berlin-k-mood
+    paths:
+      - '.github/workflows/release.yml'
   workflow_dispatch:
     inputs:
       version:
@@ -17,8 +22,8 @@ jobs:
     permissions:
       contents: write
     with:
-      tag: v${{ inputs.version }}
-      version: ${{ inputs.version }}
+      tag: v1.0.0
+      version: 1.0.0
       tools_repo: saustin2010/mpc-vst-plugins
       tools_ref: f210a56b269deb622ce4d62f437ee3ac8567ceaf
       vst_dir: .
@@ -27,4 +32,4 @@ jobs:
       plugin_id: berlinkmood
       license: MIT
       about: "BERLIN K-MOOD: four-oscillator Berlin School synthesizer with arpeggiator, dotted stereo delay, phaser and shimmer reverb."
-      dry_run: ${{ inputs.dry_run }}
+      dry_run: false
