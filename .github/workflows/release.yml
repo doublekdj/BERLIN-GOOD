@@ -27,7 +27,7 @@ jobs:
       tools_repo: saustin2010/mpc-vst-plugins
       tools_ref: f210a56b269deb622ce4d62f437ee3ac8567ceaf
       vst_dir: .
-      build: bash "$MPC_VST/tools/build_port.sh" vst.json
+      build: bash tools/calibrate.sh && bash "$MPC_VST/tools/build_port.sh" vst.json
       host_test: '"$MPC_VST/tools/test_port.sh" vst.json'
       plugin_id: berlinkmood
       license: MIT
