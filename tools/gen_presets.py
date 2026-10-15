@@ -207,9 +207,9 @@ def brighten(name, p):
 
 # effect profiles: 16 steps, each family walks through them in a different order, so every family has dry,
 # medium and very wet patches, with and without phaser / drive / delay
-RV_MIX = [0.0, 0.3, 0.5, 0.7, 0.35, 0.6, 0.0, 0.45, 0.8, 0.25, 0.55, 0.4, 0.65, 0.3, 0.5, 0.75]
-DL_MIX = [0.0, 0.25, 0.4, 0.55, 0.0, 0.35, 0.5, 0.3, 0.6, 0.0, 0.45, 0.35, 0.5, 0.25, 0.0, 0.4]
-PH_MIX = [0.0, 0.6, 0.8, 0.0, 0.7, 0.9, 0.5, 0.0, 0.75, 0.65, 0.0, 0.85, 0.55, 0.7, 0.0, 0.8]
+RV_MIX = [0.28, 0.48, 0.62, 0.78, 0.52, 0.68, 0.35, 0.58, 0.84, 0.42, 0.64, 0.55, 0.74, 0.46, 0.60, 0.80]
+DL_MIX = [0.16, 0.25, 0.36, 0.45, 0.18, 0.32, 0.42, 0.28, 0.50, 0.16, 0.38, 0.30, 0.44, 0.24, 0.18, 0.36]
+PH_MIX = [0.32, 0.62, 0.78, 0.42, 0.70, 0.88, 0.55, 0.38, 0.80, 0.66, 0.30, 0.84, 0.58, 0.72, 0.40, 0.82]
 DR_AMT = [0.0, 0.0, 0.4, 0.0, 0.0, 0.55, 0.0, 0.3, 0.0, 0.0, 0.7, 0.0, 0.45, 0.0, 0.0, 0.6]
 
 
@@ -269,23 +269,31 @@ def variant(fi, vi, name, base, arp):
     p["rv_on"] = 1 if rv > 0 else 0
     p["sh_mix"] = rv
     p["rv_type"] = (fi + vi) % 3
-    p["sh_decay"] = max(0.15, min(0.95, 0.3 + 0.045 * ((vi * 7 + fi) % 16)))
-    p["sh_shimmer"] = [0.0, 0.0, 0.25, 0.45, 0.0, 0.6, 0.15, 0.0][(vi + fi) % 8]
+    # K-MOOD signature: long tails are part of the instrument, not rare exceptions.
+    p["sh_decay"] = max(0.48, min(0.98, 0.62 + 0.025 * ((vi * 7 + fi) % 15)))
+    p["sh_shimmer"] = [0.18, 0.28, 0.42, 0.55, 0.12, 0.68, 0.32, 0.22][(vi + fi) % 8]
     p["sh_damp"] = 0.3 + 0.04 * ((vi * 3 + fi) % 10)
     k = (vi * 3 + fi) % 16
     dm = DL_MIX[k]
     p["dl_on"] = 1 if dm > 0 else 0
     p["dl_mix"] = dm
     p["dl_div"] = [0, 0, 1, 2, 4, 0, 3, 1][(vi + fi) % 8]
-    p["dl_fb"] = 0.3 + 0.05 * ((vi + fi) % 6)
-    p["dl_tone"] = 0.4 + 0.05 * ((vi * 2 + fi) % 8)
+    p["dl_fb"] = 0.32 + 0.045 * ((vi + fi) % 6)
+    p["dl_tone"] = 0.38 + 0.055 * ((vi * 2 + fi) % 8)
+    # Bass families get a dotted-eighth pulse, audible but below the fundamental.
+    if name in BASSES:
+        p["dl_on"] = 1
+        p["dl_div"] = 0
+        p["dl_fb"] = 0.30 + 0.025 * (vi % 5)
+        p["dl_mix"] = 0.16 + 0.025 * (vi % 5)
     k = (vi * 7 + fi * 3) % 16
     pm = PH_MIX[k]
     p["ph_on"] = 1 if pm > 0 else 0
     p["ph_mix"] = pm
     p["ph_rate"] = 0.08 + 0.05 * ((vi * 5 + fi) % 9)
-    p["ph_depth"] = 0.5 + 0.05 * ((vi + fi * 2) % 9)
-    p["ph_fb"] = 0.3 + 0.05 * ((vi * 3 + fi) % 8)
+    p["ph_depth"] = 0.62 + 0.035 * ((vi + fi * 2) % 9)
+    p["ph_fb"] = 0.36 + 0.045 * ((vi * 3 + fi) % 8)
+    p["ph_mix"] = max(0.28, min(0.88, p["ph_mix"]))
     k = (vi * 5 + fi * 7) % 16
     da = DR_AMT[k]
     p["dr_on"] = 1 if da > 0 else 0
@@ -323,10 +331,15 @@ def build():
     for n, p in HAND:
         p = dict(p)
         brighten(n, p)
-        out.append((n, p))
+        out.append(("K-" + n, p))
     for fi, (name, base, arp) in enumerate(FAMILIES):
         for vi in range(31 if fi < 14 else 30):
-            out.append(variant(fi, vi, name, base, arp))
+            patch_name, patch = variant(fi, vi, name, base, arp)
+            suffix = patch_name.split(" ")[-1]
+            if len("K-" + patch_name) > 31:
+                prefix = patch_name[:31 - 2 - len(suffix) - 1].rstrip()
+                patch_name = prefix + " " + suffix
+            out.append(("K-" + patch_name, patch))
     return out
 
 
