@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="628" viewBox="0 0 1280 628">
+<defs>
+ <linearGradient id="wood" x2="0" y2="1"><stop stop-color="#7b4927"/><stop offset=".22" stop-color="#3d2416"/><stop offset=".55" stop-color="#6b3c20"/><stop offset="1" stop-color="#24150f"/></linearGradient>
+ <pattern id="grain" width="90" height="22" patternUnits="userSpaceOnUse"><path d="M0 4 Q25 1 45 5 T90 4 M0 15 Q28 12 50 16 T90 15" fill="none" stroke="#d39a60" stroke-opacity=".18" stroke-width="1"/></pattern>
+ <linearGradient id="panel" x2="0" y2="1"><stop stop-color="#242526"/><stop offset=".18" stop-color="#101112"/><stop offset=".72" stop-color="#18191a"/><stop offset="1" stop-color="#080909"/></linearGradient>
+ <linearGradient id="metal" x2="0" y2="1"><stop stop-color="#e0e2e4"/><stop offset=".35" stop-color="#73787b"/><stop offset=".55" stop-color="#25282a"/><stop offset="1" stop-color="#aeb2b5"/></linearGradient>
+ <linearGradient id="amber" x2="0" y2="1"><stop stop-color="#ffcf79"/><stop offset="1" stop-color="#b44a13"/></linearGradient>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5"/></filter>
+</defs>
+<rect width="1280" height="628" fill="#070808"/>
+<rect x="0" y="0" width="1280" height="628" rx="10" fill="url(#wood)"/>
+<rect x="0" y="0" width="1280" height="628" fill="url(#grain)"/>
+<rect x="18" y="16" width="1244" height="596" rx="8" fill="#000" opacity=".55" filter="url(#shadow)"/>
+<rect x="22" y="12" width="1236" height="604" rx="7" fill="url(#panel)" stroke="#9da1a3" stroke-width="2"/>
+<rect x="30" y="20" width="1220" height="588" rx="5" fill="none" stroke="#414446" stroke-width="1"/>
+<path d="M32 90 H1248" stroke="#e3a14d" stroke-width="2" opacity=".9"/>
+<text x="54" y="58" font-family="Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="5" fill="#f3f0e9">BERLIN</text>
+<text x="54" y="81" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="7" fill="#e9a24d">K—MOOD / ANALOG SEQUENCER</text>
+<text x="1224" y="45" text-anchor="end" font-family="Arial,sans-serif" font-size="12" letter-spacing="3" fill="#a8abad">KK • BERLIN SCHOOL INSTRUMENT</text>
+<g fill="#0a0b0b" stroke="#44484a" stroke-width="1.5">
+ <rect x="42" y="104" width="600" height="258" rx="5"/>
+ <rect x="654" y="104" width="584" height="258" rx="5"/>
+ <rect x="42" y="376" width="1196" height="210" rx="5"/>
+</g>
+<g font-family="Arial,sans-serif" font-weight="700" letter-spacing="2" font-size="13" fill="#d8dadd">
+ <text x="58" y="127">OSCILLATOR BANK / 01—04</text>
+ <text x="670" y="127">FILTER • MODULATION • PERFORMANCE</text>
+ <text x="58" y="400">ENVELOPES / MOVEMENT</text>
+ <text x="1218" y="400" text-anchor="end" fill="#e6a052">PHASER  /  ECHO  /  SHIMMER</text>
+</g>
+<g stroke="#d88b38" stroke-width="2" opacity=".9">
+ <path d="M58 137 H620 M670 137 H1222 M58 410 H1222"/>
+</g>
+<g fill="#17191a" stroke="url(#metal)" stroke-width="1.4">
+ <rect x="58" y="150" width="132" height="194" rx="4"/><rect x="199" y="150" width="132" height="194" rx="4"/>
+ <rect x="340" y="150" width="132" height="194" rx="4"/><rect x="481" y="150" width="132" height="194" rx="4"/>
+ <rect x="670" y="150" width="548" height="194" rx="4"/>
+</g>
+<g font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="1.8" text-anchor="middle" fill="#d8dadd">
+ <text x="124" y="171">OSC 01</text><text x="265" y="171">OSC 02</text><text x="406" y="171">OSC 03</text><text x="547" y="171">OSC 04</text>
+ <text x="944" y="171">CONTROL SURFACE</text>
+</g>
+<g fill="url(#metal)" stroke="#0b0c0d" stroke-width="2">
+ <circle cx="124" cy="218" r="25"/><circle cx="124" cy="281" r="25"/>
+ <circle cx="265" cy="218" r="25"/><circle cx="265" cy="281" r="25"/>
+ <circle cx="406" cy="218" r="25"/><circle cx="406" cy="281" r="25"/>
+ <circle cx="547" cy="218" r="25"/><circle cx="547" cy="281" r="25"/>
+</g>
+<g stroke="#f7f0e5" stroke-width="2.4" stroke-linecap="round">
+ <path d="M124 218 l-4 -15 M124 281 l13 -14 M265 218 l-4 -15 M265 281 l13 -14 M406 218 l-4 -15 M406 281 l13 -14 M547 218 l-4 -15 M547 281 l13 -14"/>
+</g>
+<g font-family="Arial,sans-serif" font-size="10" letter-spacing="1" text-anchor="middle" fill="#b9bdc0">
+ <text x="124" y="260">LEVEL</text><text x="124" y="323">TUNE</text><text x="265" y="260">LEVEL</text><text x="265" y="323">DETUNE</text>
+ <text x="406" y="260">LEVEL</text><text x="406" y="323">DETUNE</text><text x="547" y="260">LEVEL</text><text x="547" y="323">DETUNE</text>
+</g>
+<g fill="#070808" stroke="#6e7478" stroke-width="1.5"><rect x="692" y="192" width="504" height="48" rx="3"/><rect x="692" y="252" width="504" height="34" rx="3"/><rect x="692" y="298" width="504" height="27" rx="3"/></g>
+<text x="712" y="222" font-family="monospace" font-size="18" letter-spacing="2" fill="#ffb45e">PHAEDRA SEQ  /  PROGRAM READY</text>
+<g fill="#ff9c3b"><circle cx="708" cy="269" r="4"/><circle cx="728" cy="269" r="4"/><circle cx="748" cy="269" r="4"/><circle cx="768" cy="269" r="4"/><circle cx="788" cy="269" r="4"/></g>
+<g font-family="Arial,sans-serif" font-size="10" letter-spacing="2" fill="#b8babc"><text x="808" y="273">PHASE</text><text x="870" y="273">ECHO</text><text x="930" y="273">SHIMMER</text><text x="1017" y="273">ARP</text><text x="1070" y="273">HOLD</text></g>
+<g fill="#1e2021" stroke="#646a6d" stroke-width="1.4"><rect x="58" y="426" width="1164" height="143" rx="4"/></g>
+<g font-family="Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="1.5" fill="#d6d8da">
+ <text x="82" y="448">FILTER A</text><text x="222" y="448">FILTER D</text><text x="362" y="448">FILTER S</text><text x="502" y="448">FILTER R</text>
+ <text x="642" y="448">AMP A</text><text x="782" y="448">AMP D</text><text x="922" y="448">AMP S</text><text x="1062" y="448">AMP R</text>
+</g>
+<g fill="url(#metal)" stroke="#0b0c0d" stroke-width="2">
+ <circle cx="112" cy="492" r="22"/><circle cx="252" cy="492" r="22"/><circle cx="392" cy="492" r="22"/><circle cx="532" cy="492" r="22"/>
+ <circle cx="672" cy="492" r="22"/><circle cx="812" cy="492" r="22"/><circle cx="952" cy="492" r="22"/><circle cx="1092" cy="492" r="22"/>
+</g>
+<g stroke="#f7f0e5" stroke-width="2.2" stroke-linecap="round"><path d="M112 492 l-4 -14 M252 492 l-4 -14 M392 492 l-4 -14 M532 492 l-4 -14 M672 492 l-4 -14 M812 492 l-4 -14 M952 492 l-4 -14 M1092 492 l-4 -14"/></g>
+<g fill="url(#amber)"><circle cx="112" cy="541" r="3"/><circle cx="252" cy="541" r="3"/><circle cx="392" cy="541" r="3"/><circle cx="532" cy="541" r="3"/><circle cx="672" cy="541" r="3"/><circle cx="812" cy="541" r="3"/><circle cx="952" cy="541" r="3"/><circle cx="1092" cy="541" r="3"/></g>
+<text x="1220" y="597" text-anchor="end" font-family="Arial,sans-serif" font-size="10" letter-spacing="3" fill="#888d90">DESIGNED FOR LONG-FORM SEQUENCES</text>
+<g fill="url(#metal)" stroke="#151617" stroke-width="1.5"><circle cx="42" cy="32" r="4"/><circle cx="1238" cy="32" r="4"/><circle cx="42" cy="596" r="4"/><circle cx="1238" cy="596" r="4"/></g>
+</svg>
