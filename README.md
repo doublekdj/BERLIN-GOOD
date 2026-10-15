@@ -21,8 +21,7 @@ Tangerine Dream / Berlin School sounds from the MPC itself.
 - Every patch has its own level trim (tools/calibrate.sh), so all 274 programs play at a similar volume.
 - Pages: MAIN, OSCILLATORS, MODULATION, **FX MOD** (phaser, delay, reverb), **FX DYN** (drive, compressor, limiter), **ARP**.
   80 parameters, all on Q-Links and automatable.
-- **274 programs**: the 14 RaffoSynth ones (effects off), 4 hand-made Berlin patches and a bank of 256 Berlin School
-  patches (16 families x 16 variations, see PRESETS.txt). Some play their own sequence through the arpeggiator.
+- **512 programs**: 14 original RaffoSynth factory patches plus 498 K-prefixed Berlin School programs, including hand-shaped sequences and families for pads, leads, basses, drones, plucks and arpeggios (see PRESETS.txt). Effects are intentionally more present, with long shimmer tails and dotted-eighth bass echoes.
 - Signal chain: synth -> drive -> phaser -> delay -> reverb -> compressor -> limiter -> soft clip.
 
 ## Build (needs Docker, e.g. Docker Desktop on the iMac)
