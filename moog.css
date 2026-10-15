@@ -1,36 +1,31 @@
-/* BERLIN K-MOOD — black satin panel, warm amber indicators, restrained metal accents.
- * Loaded after the shared sound-generator UI styles. Keep this file presentation-only. */
+/* BERLIN K-MOOD — bespoke black-satin / walnut / brushed-metal visual system. */
 :root {
-  --title-size: 22px;
-  --label-size: 17px;
+  --title-size: 23px;
+  --label-size: 16px;
   --seg-size: 16px;
   --button-size: 16px;
   --radius: 5px;
-  --sheen: 0.035;
+  --sheen: 0.06;
 }
 .frame-border {
   fill: var(--panel);
-  stroke: var(--line);
-  stroke-width: 1.6;
-  rx: 7px;
+  stroke: #53585b;
+  stroke-width: 1.7;
+  rx: 6px;
 }
-.frame-title {
-  fill: var(--ink);
-  letter-spacing: 0.18em;
-}
-.frame-rule {
-  stroke: var(--accent);
-  stroke-width: 1.6;
-}
-.text {
-  fill: var(--ink) !important;
-  letter-spacing: 0.085em;
-}
-.box-label {
-  fill: var(--ink);
-  letter-spacing: 0.12em;
-}
+.frame-title { fill: #f1eee7; letter-spacing: 0.19em; }
+.frame-rule { stroke: #d58b3c; stroke-width: 1.8; }
+.text { fill: #f0eee8 !important; letter-spacing: 0.075em; }
+.box-label { fill: #e4e1d9; letter-spacing: 0.11em; }
 .seg-tx { letter-spacing: 0.07em; }
-.arrow-bg { fill: var(--panel); }
-.arrow, .dot-arrow { fill: #e89a43; }
-.frame-border { stroke-width: 1.6; }
+.arrow-bg { fill: #111314; stroke: #777d80; stroke-width: 1; }
+.arrow, .dot-arrow { fill: #efaa52; }
+/* Active Q-Link focus: outline the entire assigned column/slot, not only its knob. */
+.qlink-column.active, .qlink-slot.active, .qlink-box.active, .qlink.active,
+.q-link-column.active, .q-link-slot.active, .q-link.active,
+[class*="qlink"][class*="active"], [class*="q-link"][class*="active"] {
+  stroke: #ff3038 !important;
+  stroke-width: 3px !important;
+  outline: 3px solid #ff3038 !important;
+  outline-offset: 2px;
+}
